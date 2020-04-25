@@ -17,11 +17,11 @@ class App extends React.Component {
                 <TotalStats />
                 <div className="ui grid">
                     <div className="ui row">
-                        <div style={{margin: 'auto'}}className="eight wide column">
+                        <div style={{margin: 'auto'}}className="ten wide column">
                                 <AllCountryData />
                         </div>
 
-                            <div style={{marginTop: '30px'}} className="ui sticky fixed seven wide column center page grid">
+                            <div style={{marginTop: '30px'}} className="ui sticky fixed five wide column center page grid">
                             <div className="ui fixed sticky">
                             <div class="ui message">
                                 <div class="header">

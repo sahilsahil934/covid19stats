@@ -39,9 +39,9 @@ class AllCountryData extends React.Component {
         let dataRows = this.state.data.map((data) => {
             return (
             <tr>
-                <td>{data.title}</td>
-                <td>{data.total_cases}</td>
-                <td className="negative">{data.total_deaths}</td>
+                <td style={{textAlign: 'center'}}>{data.title}</td>
+                <td>{data.total_cases} &nbsp; (+{data.total_new_cases_today})</td>
+                <td className="negative">{data.total_deaths} &nbsp; (+{data.total_new_deaths_today})</td>
                 <td>{(data.total_recovered !== 0) ? data.total_recovered : "Not Available or 0" }</td>
                 <td>{data.total_active_cases}</td>
                 <td className="negative">{data.total_serious_cases}</td>
