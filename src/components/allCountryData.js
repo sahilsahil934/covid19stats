@@ -57,7 +57,7 @@ class AllCountryData extends React.Component {
 
         return (
             <div style={{marginTop: '30px'}} className="ui sticky left align container">
-                <table className="ui celled table">
+                <table className="ui stackable celled table">
                     <thead>
                         <tr>
                         <th>Country Name</th>

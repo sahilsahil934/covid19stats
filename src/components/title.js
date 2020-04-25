@@ -6,8 +6,9 @@ class Title extends React.Component {
 
         return (
             <div className="ui one center aligned fixed menu">
-                    <h2 className="ui center aligned item">Covid-19 Stats</h2>
+                    <a href="/"><h2 className="ui center aligned item">Covid-19 Stats</h2></a>
                     <h1 style={{margin: 'auto'}} className="ui center  ">Stay Home, Stay Safe</h1>
+                
             </div>
         );
     }
