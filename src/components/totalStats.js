@@ -1,6 +1,38 @@
 import React from 'react';
+import totalCases from './../api/totalCases'
+
 
 class TotalStats extends React.Component {
+
+    state = {
+                total: 0,
+                death: 0,
+                recovered: 0,
+                newCases: 0,
+                newDeath: 0,
+                newRecoverd: 0
+            };
+
+    componentDidMount() {
+
+        this.totalCasesRequest();
+        
+    }
+
+    totalCasesRequest = async () => {
+
+        const response = await totalCases.get();
+
+        const result = response.data.results[0];
+        this.setState({
+            total: result.total_cases,
+            death: result.total_deaths,
+            recovered: result.total_recovered,
+            newCases: result.total_new_cases_today,
+            newDeath: result.total_new_deaths_today,
+            newRecoverd: result.total_new_recovered_today
+        });
+    }
 
     render() {
 
@@ -13,29 +45,24 @@ class TotalStats extends React.Component {
                 </div>  
                 <div style={{marginTop: '0'}} class="ui three item menu">
                     <div class="item">
-                        
-                        <div class="ui statistic">
-                            <div class="value">
-                                5,550
+                            <div style={{color: 'gray'}} class="value">
+                                <h3>{this.state.total} &nbsp; (+{this.state.newCases})</h3>
                             </div>
                 
-                        </div>
                     </div>
                     <div class="item">
-                        <div class="ui statistic">
-                            <div class="value">
-                                5,550
+                            <div style={{color: 'red'}} class="value">
+                                <h3>{this.state.death} &nbsp; (+{this.state.newDeath})</h3>
                             </div>
                             
-                        </div>
+                        
                     </div>
-                    <div class="item">
-                        <div class="ui statistic">
+                    <div style={{color: 'lightgreen'}} class="item">
                             <div class="value">
-                                5,550
+                                <h3>{this.state.recovered}</h3>
                             </div>
                            
-                        </div>
+                        
                     </div>
                 </div>
             </div>
