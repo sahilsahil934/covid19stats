@@ -2,6 +2,7 @@ import React from 'react';
 import Title from './title'
 import TotalStats from './totalStats'
 import AllCountryData from './allCountryData'
+import LineChart from './charts/casesChart'
 
 class App extends React.Component {
 
@@ -10,27 +11,18 @@ class App extends React.Component {
 
         return (
             <div>
-                <Title />
-                
+                <Title />  
                 <TotalStats />
+                <div className="ui conatiner">
                 <div className="ui grid">
                     <div className="ui row">
-                        <div style={{margin: 'auto'}}className="ten wide column">
+                        <div style={{margin: 'auto'}}className="nine wide column">
                                 <AllCountryData />
                         </div>
 
-                            <div style={{marginTop: '30px'}} className="ui sticky fixed five wide column center page grid">
+                            <div style={{marginTop: '20px'}} className="ui sticky fixed six wide column center page grid">
                             <div className="ui fixed sticky">
-                            <div className="ui message">
-                                <div className="header">
-                                    New Site Features
-                                </div>
-                                <ul className="list">
-                                    <li>Graphs will be added soon...</li>
-                                    <li>India's detailed report with states and district coming soon...</li>
-                                    <li>Graphs of each country is coming soon...</li>
-                                </ul>
-                            </div>
+                            <LineChart />
                             <div className="ui message">
                                 <div className="header">
                                     Support
@@ -53,6 +45,7 @@ class App extends React.Component {
                             </div>
                         
                     </div>
+                </div>
                 </div>
             </div>
         );

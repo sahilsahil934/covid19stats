@@ -42,37 +42,37 @@ class TotalStats extends React.Component {
     render() {
 
         return (
-            <div style={{ marginLeft:'10px', marginRight:'10px', marginTop: '60px', align: 'center' }} className="ui column center page grid">  
+            <div style={{ marginLeft:'10px', marginRight:'10px', marginTop: '40px', align: 'center' }} className="ui column center page grid">  
                 <div style={{ marginBottom: '0'}}class="ui five item menu">
-                    <div class="item">Total Cases</div>
-                    <div class="item active">Total Deaths</div>
-                    <div class="item">Total Recovered</div>
-                    <div class="item">Active Cases</div>
-                    <div class="item">Serious Cases</div>
+                    <div className="item">Total Cases</div>
+                    <div className="item active">Total Deaths</div>
+                    <div className="item">Total Recovered</div>
+                    <div className="item">Active Cases</div>
+                    <div className="item">Serious Cases</div>
 
                 </div>  
-                <div style={{marginTop: '0'}} class="ui five item menu">
+                <div style={{marginTop: '0'}} className="ui five item menu">
                     <div class="item">
-                            <div style={{color: 'gray'}} class="value">
+                            <div style={{color: 'gray'}} className="value">
                                 <h3>{this.state.total} &nbsp; (+{this.state.newCases})</h3>
                             </div>               
                     </div>
                     <div class="item">
-                            <div style={{color: 'red'}} class="value">
+                            <div style={{color: 'red'}} className="value">
                                 <h3>{this.state.death} &nbsp; (+{this.state.newDeath})</h3>
                             </div>                      
                     </div>
-                    <div style={{color: 'lightgreen'}} class="item">
+                    <div style={{color: 'lightgreen'}} className="item">
                             <div class="value">
                                 <h3>{this.state.recovered}</h3>
                             </div>                                              
                     </div>
-                    <div style={{color: 'darkyellow'}} class="item">
+                    <div style={{color: 'darkyellow'}} className="item">
                             <div class="value">
                                 <h3>{this.state.activeCases}</h3>
                             </div>                                              
                     </div>
-                    <div style={{color: 'red'}} class="item">
+                    <div style={{color: 'red'}} className="item">
                             <div class="value">
                                 <h3>{this.state.seriousCases}</h3>
                             </div>                                              

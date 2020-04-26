@@ -40,14 +40,13 @@ class AllCountryData extends React.Component {
             return (
             <tr>
                 <td style={{textAlign: 'center'}}>{data.title}</td>
-                <td>{data.total_cases} &nbsp; (+{data.total_new_cases_today})</td>
-                <td className="negative">{data.total_deaths} &nbsp; (+{data.total_new_deaths_today})</td>
+                <td>{data.total_cases} &nbsp; {(data.total_new_cases_today !== 0) ? "(+" + data.total_new_cases_today + ")" : " "}</td>
+                <td className="negative">{data.total_deaths} &nbsp; {(data.total_new_deaths_today !== 0) ? "(+" + data.total_new_deaths_today + ")": ""}</td>
                 <td>{(data.total_recovered !== 0) ? data.total_recovered : "Not Available or 0" }</td>
                 <td>{data.total_active_cases}</td>
                 <td className="negative">{data.total_serious_cases}</td>
             </tr>);
         });
-        console.log(this.state.data)
         return dataRows;
     }
 
@@ -56,7 +55,7 @@ class AllCountryData extends React.Component {
     render() {
 
         return (
-            <div style={{marginTop: '30px'}} className="ui sticky left align container">
+            <div style={{marginTop: '20px'}} className="ui sticky left align container">
                 <table className="ui stackable celled table">
                     <thead>
                         <tr>
