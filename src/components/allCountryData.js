@@ -1,7 +1,9 @@
 import React from 'react'
 import allCountryCases from './../api/allCountryCases';
+import LineChart from './charts/casesChart'
 
 class AllCountryData extends React.Component {
+
 
     state = {
         data: []
@@ -32,13 +34,19 @@ class AllCountryData extends React.Component {
         }
         });
         this.setState({data: sortedData})
+
+    }
+
+    showGraph = (data) =>  {
+
+        this.setState({ code: data });
     }
 
     AllRecord = () => {
 
         let dataRows = this.state.data.map((data) => {
             return (
-            <tr>
+            <tr  key={data.code} onClick={() => this.showGraph(data.code)}>
                 <td style={{textAlign: 'center'}}>{data.title}</td>
                 <td>{data.total_cases} &nbsp; {(data.total_new_cases_today !== 0) ? "(+" + data.total_new_cases_today + ")" : " "}</td>
                 <td className="negative">{data.total_deaths} &nbsp; {(data.total_new_deaths_today !== 0) ? "(+" + data.total_new_deaths_today + ")": ""}</td>
@@ -55,9 +63,18 @@ class AllCountryData extends React.Component {
     render() {
 
         return (
-            <div style={{marginTop: '20px'}} className="ui sticky left align container">
-                <table className="ui stackable celled table">
-                    <thead>
+            
+            <div className="ui conatiner">
+            <div className="ui grid">
+                <div className="ui row">
+                    <div style={{margin: 'auto', marginTop:'20px', marginBottom: '0px'}}className="nine wide column">
+                    <div class="ui message">
+                        <div class="header">
+                            Click on any country row to view the detailed graph.
+                        </div>
+                    </div>
+                    <table className="ui stackable celled table">
+                    <thead>   
                         <tr>
                         <th>Country Name</th>
                         <th>Total Cases</th>
@@ -71,6 +88,34 @@ class AllCountryData extends React.Component {
                         {this.AllRecord()}
                     </tbody>
                 </table>
+                    </div>
+
+                    <div style={{marginTop: '20px'}} className="ui sticky fixed six wide column center page grid">
+                            <div className="ui fixed sticky">
+                            <LineChart code={this.state.code} />
+                            <div className="ui message">
+                                <div className="header">
+                                    Support
+                                </div>
+                                <ul className="list">
+                                    <li>To Contribute : <a href="https://github.com/iamsahil1910/covid19stats">Click Here</a></li>
+                                    <li>To provide detailed data country API: Email: <a href="mailto:iamsahil1910@gmail.com">iamsaihl1910@gmail.com</a></li>
+                                </ul>
+                            </div>
+                            <div className="ui message">
+                                <div className="header">
+                                    New Site Features
+                                </div>
+                                <ul className="list">
+                                    <li>World Data: <a href="https://thevirustracker.com/">The Virus Tracker</a></li>
+                                    <li>India data (coming soon): <a href="https://www.covid19india.org">Covid19India</a></li>
+                                </ul>
+                            </div>
+                            </div>
+                            </div>  
+                    
+                </div>
+            </div>
             </div>
         );
     }

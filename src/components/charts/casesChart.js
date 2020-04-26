@@ -5,9 +5,11 @@ import {Bar} from 'react-chartjs-2';
 
 class LineChart extends React.Component {
 
+    
     state = {
         requiredDate: '',
         country: '',
+        code: '',
         month: 0,
         year: 0,
         mlist: [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
@@ -26,7 +28,7 @@ class LineChart extends React.Component {
           }
         ]
       }
-
+    
       componentDidMount() {
 
           let dates = this.requiredDate();  
@@ -34,11 +36,24 @@ class LineChart extends React.Component {
                 
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.code !== prevProps.code) {
+            let dates = this.requiredDate();  
+            this.totalCasesRequest(this.props.code, dates);
+            }
+    }
+
+    newGraph = (id) => {
+        let dates = this.requiredDate();  
+        this.totalCasesRequest('US', dates);
+    }
+
     totalCasesRequest = async (country, dates) => {
 
         const response = await allWorldData.get(country);
         const result = response.data;
-        console.log(dates)
+        console.log(dates);
+
         let cases = dates.map(date => result.timelineitems[0][date].new_daily_cases);
         this.setState({
             country: result.countrytimelinedata[0].info.title,
@@ -54,10 +69,9 @@ class LineChart extends React.Component {
                   borderWidth: 1,
                   data: cases
                 }
-              ]
-
-        })
-
+              ],
+              code: result.countrytimelinedata[0].info.code
+        });
 
     }
 
@@ -86,8 +100,11 @@ class LineChart extends React.Component {
     }
       
         render() {
+
+            let code = this.state.code;
             return (
             <div>
+
                 <div className="ui message">
                     <div className="header">
                     Country : {this.state.country} &nbsp; ({this.state.mlist[this.state.month - 1]})
@@ -108,7 +125,8 @@ class LineChart extends React.Component {
                             }}
                          />    
                         </div>
-                        <DeathChart />
+                        <br />
+                        <DeathChart code={code} />
                     </div>      
             </div>
             );

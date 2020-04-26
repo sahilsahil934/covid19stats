@@ -8,6 +8,7 @@ class DeathChart extends React.Component {
         requiredDate: '',
         country: '',
         month: 0,
+        code: '',
         year: 0,
         mlist: [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
         allRecord: [],
@@ -18,7 +19,7 @@ class DeathChart extends React.Component {
             fill: false,
             lineTension: 0.5,
             barThickness: 8,
-            backgroundColor: '',
+            backgroundColor: 'rgb(255,0,0)',
             borderColor: 'rgba(0,0,0,1)',
             borderWidth: 1,
             data: []
@@ -26,11 +27,11 @@ class DeathChart extends React.Component {
         ]
       }
 
-      componentDidMount() {
-
-          let dates = this.requiredDate();  
-          this.totalCasesRequest('US', dates);
-                
+    componentDidUpdate(prevProps) {
+        if (this.props.code !== prevProps.code) {
+        let dates = this.requiredDate();  
+        this.totalCasesRequest(this.props.code, dates);
+        }
     }
 
     totalCasesRequest = async (country, dates) => {
@@ -48,7 +49,7 @@ class DeathChart extends React.Component {
                   fill: false,
                   lineTension: 0.5,
                   barThickness: 8,
-                  backgroundColor: '',
+                  backgroundColor: 'rgb(139,0,0)',
                   borderColor: 'rgba(0,0,0,1)',
                   borderWidth: 1,
                   data: cases
