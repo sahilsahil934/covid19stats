@@ -108,9 +108,8 @@ class LineChart extends React.Component {
         }
 
         }
-        catch(e) {
-            console.log(result)
-            this.setState({ recieved: false})
+        catch(e) {  
+            this.notRecievedHandler();
         }
 
         return;
@@ -148,7 +147,7 @@ class LineChart extends React.Component {
         console.log(this.state.code)
         if (this.state.monthValue === 2) {
             let month = this.state.month
-            this.setState({monthValue: 3, originalMonth: month})
+            this.setState({monthValue: month - 1, originalMonth: month})
             this.notRecievedHandler(this.state.code, 3)
         } else {
             this.setState({monthValue: 2})
@@ -185,7 +184,7 @@ class LineChart extends React.Component {
                     </ul>
                     <ul>
                         Solution
-                        {/* < li style={{color: 'blue'}} onClick={this.notRecievedHandler}>Try again</li> */}
+                        {/* <li style={{color: 'blue'}} onClick={this.notRecievedHandler}>Try again</li> */}
                         <li>Refresh the page</li>
                     </ul>
                       </div>
@@ -199,8 +198,8 @@ class LineChart extends React.Component {
                 <div className="ui message">
                     <div className="header">
                         <div>
-                    Country : {this.state.country} &nbsp; ({this.state.mlist[this.state.month - 1]}) &nbsp; &nbsp;
-            <button className="small ui green button" onClick={this.marchData}>{this.state.mlist[this.state.monthValue]}</button>
+                    Country : {this.state.country} &nbsp; <button class="smaill ui green button">{this.state.mlist[this.state.month - 1]}</button> &nbsp; &nbsp;
+            For &nbsp;<button className="small ui button"style={{color: '#3e9b39'}} onClick={this.marchData}>{this.state.mlist[this.state.monthValue]}</button>
             </div>
                         </div>
                         <div style={{height: '200px'}}>
