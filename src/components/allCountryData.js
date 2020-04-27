@@ -1,6 +1,7 @@
 import React from 'react'
 import allCountryCases from './../api/allCountryCases';
 import LineChart from './charts/casesChart'
+import './allCountryData.css'
 
 class AllCountryData extends React.Component {
 
@@ -46,7 +47,7 @@ class AllCountryData extends React.Component {
 
         let dataRows = this.state.data.map((data) => {
             return (
-            <tr  key={data.code} onClick={() => this.showGraph(data.code)}>
+            <tr  className="country-row"  key={data.code} onClick={() => this.showGraph(data.code)}>
                 <td style={{textAlign: 'center'}}>{data.title}</td>
                 <td>{data.total_cases} &nbsp; {(data.total_new_cases_today !== 0) ? "(+" + data.total_new_cases_today + ")" : " "}</td>
                 <td className="negative">{data.total_deaths} &nbsp; {(data.total_new_deaths_today !== 0) ? "(+" + data.total_new_deaths_today + ")": ""}</td>
@@ -84,7 +85,7 @@ class AllCountryData extends React.Component {
                         <th>Serious Cases</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                         {this.AllRecord()}
                     </tbody>
                 </table>

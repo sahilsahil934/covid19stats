@@ -31,35 +31,51 @@ class DeathChart extends React.Component {
         if (this.props.code !== prevProps.code) {
         let dates = this.requiredDate();  
         this.totalCasesRequest(this.props.code, dates);
+        
         }
     }
+
+    notRecievedHandler = (country) => {
+
+        let dates = this.requiredDate();  
+        this.totalCasesRequest(country, dates);
+    }
+
 
     totalCasesRequest = async (country, dates) => {
 
         const response = await allWorldData.get(country);
         const result = response.data;
-        console.log(dates)
-        let cases = dates.map(date => result.timelineitems[0][date].new_daily_deaths);
-        this.setState({
-            country: result.countrytimelinedata[0].info.title,
-            allRecord: result.timelineitems,
-            datasets: [
-                {
-                  label: 'Death',
-                  fill: false,
-                  lineTension: 0.5,
-                  barThickness: 8,
-                  backgroundColor: 'rgb(139,0,0)',
-                  borderColor: 'rgba(0,0,0,1)',
-                  borderWidth: 1,
-                  data: cases
-                }
-              ]
+        let cases = []
 
-        })
+
+        try {
+             cases= dates.map(date => result.timelineitems[0][date].new_daily_cases);
+             this.setState({
+                country: result.countrytimelinedata[0].info.title,
+                allRecord: result.timelineitems,
+                datasets: [
+                    {
+                      label: 'Cases',
+                      fill: false,
+                      lineTension: 0.5,
+                      barThickness: 8,
+                      backgroundColor: '',
+                      borderColor: 'rgba(0,0,0,1)',
+                      borderWidth: 1,
+                      data: cases
+                    }
+                  ],
+                  code: country
+            });
+        }
+        catch(e) {
+            this.notRecievedHandler(country)
+        }
 
 
     }
+
 
     requiredDate = () => {
         let newDate = new Date();
