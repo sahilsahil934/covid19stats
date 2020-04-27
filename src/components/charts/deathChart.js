@@ -28,9 +28,10 @@ class DeathChart extends React.Component {
       }
 
     componentDidUpdate(prevProps) {
-        if (this.props.code !== prevProps.code) {
-        let dates = this.requiredDate();  
-        this.totalCasesRequest(this.props.code, dates);
+        console.log(this.props.code)
+        if (JSON.stringify(this.props.code) !== JSON.stringify(prevProps.code)) {
+        let dates = this.requiredDate(this.props.code[1]);  
+        this.totalCasesRequest(this.props.code[0], dates);
         
         }
     }
@@ -78,18 +79,23 @@ class DeathChart extends React.Component {
     }
 
 
-    requiredDate = () => {
+
+    requiredDate = (monthVal=0) => {
         let newDate = new Date();
-        let date = newDate.getDate();
+        let date = newDate.getDate() - 1;
         let month = newDate.getMonth() + 1;
         let year = newDate.getFullYear();
+        if (monthVal !== 0) {
+            month = monthVal;
+            date = new Date(year, monthVal, 0).getDate()
+        } 
         let x = year % 10;
         let newYear = parseInt(year / 10);
         let y = newYear % 10;
         let shortYear = (y * 10) + x;
         let requireDate = month.toString() + '/' + date.toString() + '/' + shortYear.toString();
         let dates = [];
-        for (let i = 1; i < date; i++) {
+        for (let i = 1; i <= date; i++) {
             if (i < 10) {
                 dates.push(month.toString() + '/0' + i.toString() + '/' + shortYear.toString())
             } else {
@@ -105,7 +111,7 @@ class DeathChart extends React.Component {
         render() {
             return (
  
-                        <div style={{height: '200px', marginTop: '10px'}}>
+                        <div style={{height: '200px', marginTop: '0px'}}>
                         <Bar
                             data={this.state}
                             options={{

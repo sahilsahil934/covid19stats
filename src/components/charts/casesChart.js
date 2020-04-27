@@ -7,9 +7,11 @@ class LineChart extends React.Component {
 
     state = {
         get: 0,
+        monthValue:2,
         recieved: true,
         requiredDate: '',
         country: '',
+        originalMonth: 0,
         code: '',
         month: 0,
         year: 0,
@@ -42,12 +44,18 @@ class LineChart extends React.Component {
             let dates = this.requiredDate();  
             
             this.totalCasesRequest(this.props.code, dates);
+            this.setState({monthValue: 2})
             }
     }
 
-    notRecievedHandler = (country) => {
+    notRecievedHandler = (country=this.state.code, month=0) => {
 
-        let dates = this.requiredDate();  
+        let dates;
+        if (month === 0)  {
+            dates = this.requiredDate(); 
+        } else {
+            dates = this.requiredDate(month);
+        }
         this.totalCasesRequest(country, dates);
     }
 
@@ -101,24 +109,29 @@ class LineChart extends React.Component {
 
         }
         catch(e) {
+            console.log(result)
             this.setState({ recieved: false})
         }
 
         return;
     }
 
-    requiredDate = () => {
+    requiredDate = (monthVal=0) => {
         let newDate = new Date();
-        let date = newDate.getDate();
+        let date = newDate.getDate() - 1;
         let month = newDate.getMonth() + 1;
         let year = newDate.getFullYear();
+        if (monthVal !== 0) {
+            month = monthVal;
+            date = new Date(year, monthVal, 0).getDate()
+        } 
         let x = year % 10;
         let newYear = parseInt(year / 10);
         let y = newYear % 10;
         let shortYear = (y * 10) + x;
         let requireDate = month.toString() + '/' + date.toString() + '/' + shortYear.toString();
         let dates = [];
-        for (let i = 1; i < date; i++) {
+        for (let i = 1; i <= date; i++) {
             if (i < 10) {
                 dates.push(month.toString() + '/0' + i.toString() + '/' + shortYear.toString())
             } else {
@@ -129,6 +142,20 @@ class LineChart extends React.Component {
         this.setState({todayDate: requireDate, month: month, year: shortYear, labels: dates});
 
         return dates;
+    }
+
+    marchData = () => {
+        console.log(this.state.code)
+        if (this.state.monthValue === 2) {
+            let month = this.state.month
+            this.setState({monthValue: 3, originalMonth: month})
+            this.notRecievedHandler(this.state.code, 3)
+        } else {
+            this.setState({monthValue: 2})
+            this.notRecievedHandler(this.state.code, this.state.originalMonth)
+
+        }
+
     }
       
         render() {
@@ -158,7 +185,7 @@ class LineChart extends React.Component {
                     </ul>
                     <ul>
                         Solution
-                        <li style={{color: 'blue'}}onClick={this.notRecievedHandler}>Try again</li>
+                        {/* < li style={{color: 'blue'}} onClick={this.notRecievedHandler}>Try again</li> */}
                         <li>Refresh the page</li>
                     </ul>
                       </div>
@@ -171,7 +198,10 @@ class LineChart extends React.Component {
 
                 <div className="ui message">
                     <div className="header">
-                    Country : {this.state.country} &nbsp; ({this.state.mlist[this.state.month - 1]})
+                        <div>
+                    Country : {this.state.country} &nbsp; ({this.state.mlist[this.state.month - 1]}) &nbsp; &nbsp;
+            <button className="small ui green button" onClick={this.marchData}>{this.state.mlist[this.state.monthValue]}</button>
+            </div>
                         </div>
                         <div style={{height: '200px'}}>
                         <Bar
@@ -190,11 +220,11 @@ class LineChart extends React.Component {
                          />    
                         </div>
                         <br />
-                        <DeathChart code={this.state.code} />
+                        <DeathChart code={[this.state.code, this.state.month]} />
                     </div>      
             </div>
             );
-        }
+        }   
         }
 
 export default LineChart;
