@@ -15,6 +15,7 @@ class LineChart extends React.Component {
         code: '',
         month: 0,
         year: 0,
+        xdates: [],
         mlist: [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
         allRecord: [],
         labels: [],
@@ -25,6 +26,7 @@ class LineChart extends React.Component {
             lineTension: 0.5,
             barThickness: 8,
             backgroundColor: '',
+            hoverBackgroundColor: 'black',
             borderColor: 'rgba(0,0,0,1)',
             borderWidth: 1,
             data: []
@@ -97,7 +99,8 @@ class LineChart extends React.Component {
                       fill: false,
                       lineTension: 0.5,
                       barThickness: 8,
-                      backgroundColor: '',
+                      hoverBackgroundColor: 'black',
+                      backgroundColor: 'darkgray',
                       borderColor: 'rgba(0,0,0,1)',
                       borderWidth: 1,
                       data: cases
@@ -137,8 +140,16 @@ class LineChart extends React.Component {
                 dates.push(month.toString() + '/' + i.toString() + '/' + shortYear.toString())
             }
         }
+        let xdates = [];
+        for (let i = 1; i <= date; i++) {
+            if (i < 10) {
+                xdates.push(month.toString() + '/0' + i.toString())
+            } else {
+                xdates.push(month.toString() + '/' + i.toString())
+            }
+        }
 
-        this.setState({todayDate: requireDate, month: month, year: shortYear, labels: dates});
+        this.setState({todayDate: requireDate, month: month, year: shortYear, labels: xdates});
 
         return dates;
     }
@@ -198,8 +209,8 @@ class LineChart extends React.Component {
                 <div className="ui message">
                     <div className="header">
                         <div>
-                    Country : {this.state.country} &nbsp; <button class="smaill ui green button">{this.state.mlist[this.state.month - 1]}</button> &nbsp; &nbsp;
-            For &nbsp;<button className="small ui button"style={{color: '#3e9b39'}} onClick={this.marchData}>{this.state.mlist[this.state.monthValue]}</button>
+                    Country : {this.state.country} &nbsp; <button id="current" class="smaill ui green button">{this.state.mlist[this.state.month - 1]}</button> &nbsp; &nbsp;
+            For &nbsp;<button id="march" className="small ui button"style={{color: '#3e9b39'}} onClick={this.marchData}>{this.state.mlist[this.state.monthValue]}</button>
             </div>
                         </div>
                         <div style={{height: '200px'}}>

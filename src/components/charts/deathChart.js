@@ -19,7 +19,8 @@ class DeathChart extends React.Component {
             fill: false,
             lineTension: 0.5,
             barThickness: 8,
-            backgroundColor: 'rgb(255,0,0)',
+            backgroundColor: 'red',
+            hoverBackgroundColor: 'black',
             borderColor: 'rgba(0,0,0,1)',
             borderWidth: 1,
             data: []
@@ -61,7 +62,8 @@ class DeathChart extends React.Component {
                       fill: false,
                       lineTension: 0.5,
                       barThickness: 8,
-                      backgroundColor: 'rgb(255,0,0)',
+                      hoverBackgroundColor: 'black',
+                      backgroundColor: 'red',
                       borderColor: 'rgba(0, 0, 0, 1)',
                       borderWidth: 1,
                       data: cases
@@ -103,7 +105,16 @@ class DeathChart extends React.Component {
             }
         }
 
-        this.setState({todayDate: requireDate, month: month, year: shortYear, labels: dates});
+        let xdates = [];
+        for (let i = 1; i <= date; i++) {
+            if (i < 10) {
+                xdates.push(month.toString() + '/0' + i.toString())
+            } else {
+                xdates.push(month.toString() + '/' + i.toString())
+            }
+        }
+
+        this.setState({todayDate: requireDate, month: month, year: shortYear, labels: xdates});
 
         return dates;
     }
