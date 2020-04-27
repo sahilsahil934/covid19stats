@@ -45,6 +45,12 @@ class LineChart extends React.Component {
             }
     }
 
+    notRecievedHandler = (country) => {
+
+        let dates = this.requiredDate();  
+        this.totalCasesRequest(country, dates);
+    }
+
 
     newGraph = (id) => {
         let dates = this.requiredDate();  
@@ -152,7 +158,7 @@ class LineChart extends React.Component {
                     </ul>
                     <ul>
                         Solution
-                        <li>Try again</li>
+                        <li style={{color: 'blue'}}onClick={this.notRecievedHandler}>Try again</li>
                         <li>Refresh the page</li>
                     </ul>
                       </div>

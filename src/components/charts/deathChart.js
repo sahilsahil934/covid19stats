@@ -15,7 +15,7 @@ class DeathChart extends React.Component {
         labels: [],
         datasets: [
           {
-            label: '',
+            label: 'Deaths',
             fill: false,
             lineTension: 0.5,
             barThickness: 8,
@@ -50,18 +50,18 @@ class DeathChart extends React.Component {
 
 
         try {
-             cases= dates.map(date => result.timelineitems[0][date].new_daily_cases);
+             cases= dates.map(date => result.timelineitems[0][date].new_daily_deaths);
              this.setState({
                 country: result.countrytimelinedata[0].info.title,
                 allRecord: result.timelineitems,
                 datasets: [
                     {
-                      label: 'Cases',
+                      label: 'Deaths',
                       fill: false,
                       lineTension: 0.5,
                       barThickness: 8,
-                      backgroundColor: '',
-                      borderColor: 'rgba(0,0,0,1)',
+                      backgroundColor: 'rgb(255,0,0)',
+                      borderColor: 'rgba(0, 0, 0, 1)',
                       borderWidth: 1,
                       data: cases
                     }
@@ -71,6 +71,7 @@ class DeathChart extends React.Component {
         }
         catch(e) {
             this.notRecievedHandler(country)
+        
         }
 
 
