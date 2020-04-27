@@ -21,9 +21,11 @@ class AllCountryData extends React.Component {
 
         const result = response.data.countryitems[0];
         let sortedData = []
+        let duplicate = ['KP', 'XK', 'CD']
         for (let i = 1; i <= 182; i++) {
-
+            if (!duplicate.includes(result[i].code)) {
             sortedData.push(result[i])
+            }
         }
         sortedData.sort((a, b) => {
         if(a.total_cases < b.total_cases){
@@ -35,6 +37,43 @@ class AllCountryData extends React.Component {
         }
         });
         this.setState({data: sortedData})
+
+    }
+
+    dataSort = (column) => {
+
+
+        let data = this.state.data;
+
+        if (column === "title") {
+
+            data.sort((b, a) => {
+
+                if(a[column] < b[column]){
+                    return 1;
+                }else if(a[column] > b[column]){
+                        return -1;
+                }else{
+                        return 0;
+                }
+            });
+
+        } else {
+            data.sort((a, b) => {
+
+                if(a[column] < b[column]){
+                    return 1;
+                }else if(a[column] > b[column]){
+                        return -1;
+                }else{
+                        return 0;
+                }
+            });
+        }
+
+        
+        this.setState({data: data})
+        
 
     }
 
@@ -64,25 +103,30 @@ class AllCountryData extends React.Component {
     render() {
 
         return (
-            
+    
             <div className="ui conatiner">
             <div className="ui grid">
                 <div className="ui row">
-                    <div style={{margin: 'auto', marginTop:'20px', marginBottom: '0px'}}className="nine wide column">
-                    <div class="ui message">
-                        <div class="header">
+                    <div style={{margin: 'auto', marginTop:'10px', marginBottom: '0px'}}className="nine wide column">
+                    <div style={{padding: '8px', marginTop:'0px', marginBottom: '0px'}} className="ui message">
+                        <div className="header">
                             Click on any country row to view the detailed graph. (Updation and Loading of graphs takes time according to you Internet speed.)
+                        </div>
+                    </div>
+                    <div style={{padding: '8px', marginTop:'10px'}} className="ui message">
+                        <div className="header">
+                            * Click on any column title to sort it according to that (Ascending.)
                         </div>
                     </div>
                     <table className="ui stackable celled table">
                     <thead>   
                         <tr>
-                        <th>Country Name</th>
-                        <th>Total Cases</th>
-                        <th>Total Deaths</th>
-                        <th>Total Recovered</th>
-                        <th>Active Cases</th>
-                        <th>Serious Cases</th>
+                        <th onClick={() => this.dataSort("title")}>Country Name</th>
+                        <th onClick={() => this.dataSort("total_cases")}>Total Cases</th>
+                        <th onClick={() => this.dataSort("total_deaths")}>Total Deaths</th>
+                        <th onClick={() => this.dataSort("total_recovered")}>Total Recovered</th>
+                        <th onClick={() => this.dataSort("total_active_cases")}>Active Cases</th>
+                        <th onClick={() => this.dataSort("total_serious_cases")}>Serious Cases</th>
                         </tr>
                     </thead>
                     <tbody >

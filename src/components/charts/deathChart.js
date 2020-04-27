@@ -29,7 +29,6 @@ class DeathChart extends React.Component {
       }
 
     componentDidUpdate(prevProps) {
-        console.log(this.props.code)
         if (JSON.stringify(this.props.code) !== JSON.stringify(prevProps.code)) {
         let dates = this.requiredDate(this.props.code[1]);  
         this.totalCasesRequest(this.props.code[0], dates);

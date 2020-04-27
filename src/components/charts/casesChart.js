@@ -86,7 +86,6 @@ class LineChart extends React.Component {
             }
             else {
                
-            console.log(Object.keys(result.timelineitems[0]).length)
              cases= dates.map(date => result.timelineitems[0][date].new_daily_cases);
              this.setState({
                  get: 0,
@@ -155,7 +154,6 @@ class LineChart extends React.Component {
     }
 
     marchData = () => {
-        console.log(this.state.code)
         if (this.state.monthValue === 2) {
             let month = this.state.month
             this.setState({monthValue: month - 1, originalMonth: month})
@@ -209,7 +207,7 @@ class LineChart extends React.Component {
                 <div className="ui message">
                     <div className="header">
                         <div>
-                    Country : {this.state.country} &nbsp; <button id="current" class="smaill ui green button">{this.state.mlist[this.state.month - 1]}</button> &nbsp; &nbsp;
+                    Country : {this.state.country} &nbsp; <button id="current" className="smaill ui green button">{this.state.mlist[this.state.month - 1]}</button> &nbsp; &nbsp;
             For &nbsp;<button id="march" className="small ui button"style={{color: '#3e9b39'}} onClick={this.marchData}>{this.state.mlist[this.state.monthValue]}</button>
             </div>
                         </div>
