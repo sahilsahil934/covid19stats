@@ -70,7 +70,7 @@ class AllCountryData extends React.Component {
                     <div style={{margin: 'auto', marginTop:'20px', marginBottom: '0px'}}className="nine wide column">
                     <div class="ui message">
                         <div class="header">
-                            Click on any country row to view the detailed graph.
+                            Click on any country row to view the detailed graph. (Updation and Loading of graphs takes time according to you Internet speed.)
                         </div>
                     </div>
                     <table className="ui stackable celled table">
