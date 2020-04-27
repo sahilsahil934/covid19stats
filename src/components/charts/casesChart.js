@@ -6,7 +6,7 @@ import {Bar} from 'react-chartjs-2';
 class LineChart extends React.Component {
 
     state = {
-        x:0,
+        get: 0,
         recieved: true,
         requiredDate: '',
         country: '',
@@ -40,22 +40,11 @@ class LineChart extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.code !== prevProps.code) {
             let dates = this.requiredDate();  
+            
             this.totalCasesRequest(this.props.code, dates);
             }
     }
 
-
-    notRecievedHandler = (country) => {
-        
-        let dates = this.requiredDate();  
-        this.totalCasesRequest(country, dates);
-        var x = this.state.x;
-        this.setState({x: x + 1});
-        if (x > 10) {
-            this.setState({recieved: false, x: 0})
-        }
-        
-    }
 
     newGraph = (id) => {
         let dates = this.requiredDate();  
@@ -71,8 +60,21 @@ class LineChart extends React.Component {
 
 
         try {
+
+            if (Object.keys(result.timelineitems[0]).length === 1)
+            {
+                this.setState({ get: 1, 
+                    recieved: true,
+                    country: result.countrytimelinedata[0].info.title
+                })
+            }
+            else {
+               
+            console.log(Object.keys(result.timelineitems[0]).length)
              cases= dates.map(date => result.timelineitems[0][date].new_daily_cases);
              this.setState({
+                 get: 0,
+                recieved: true,
                 country: result.countrytimelinedata[0].info.title,
                 allRecord: result.timelineitems,
                 datasets: [
@@ -90,11 +92,13 @@ class LineChart extends React.Component {
                   code: country
             });
         }
+
+        }
         catch(e) {
-            this.notRecievedHandler(country)
+            this.setState({ recieved: false})
         }
 
-
+        return;
     }
 
     requiredDate = () => {
@@ -123,13 +127,35 @@ class LineChart extends React.Component {
       
         render() {
 
-            let code = this.state.code;
+            if (this.state.get === 1) {
+            
+            return (
+            <div>
+
+            <div className="ui message">
+                <div className="header">
+                Country : {this.state.country} &nbsp; ({this.state.mlist[this.state.month - 1]})
+                    </div>
+                 <p>Data not available. Try another country</p>
+                </div>      
+        </div>
+            )
+        }
 
             if (this.state.recieved === false) {
                 return (<div>
                     <div className="ui message">
-                    <div className="header">Sorry!</div>
-                     Some Error Plese try again or country data not available </div>
+                    <div className="header">Sorry! Error</div>
+                    <ul>Reasons
+                    <li>Country data not available</li>
+                    <li>Can't fetch data</li>
+                    </ul>
+                    <ul>
+                        Solution
+                        <li>Try again</li>
+                        <li>Refresh the page</li>
+                    </ul>
+                      </div>
                      
                      </div>);
             }
@@ -158,7 +184,7 @@ class LineChart extends React.Component {
                          />    
                         </div>
                         <br />
-                        <DeathChart code={code} />
+                        <DeathChart code={this.state.code} />
                     </div>      
             </div>
             );
