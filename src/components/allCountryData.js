@@ -7,7 +7,10 @@ class AllCountryData extends React.Component {
 
 
     state = {
-        data: []
+        data: [], 
+        location: 'Country Name',
+        indiaData: [],
+        country: true,
     };
 
     componentDidMount() {
@@ -77,24 +80,52 @@ class AllCountryData extends React.Component {
 
     }
 
+    indiaDetails = () => {
+
+        this.setState({country: false, location: 'Total / States'})
+    }
+
+    worldDetails = () => {
+
+        this.setState({country: true, location: 'Country Name'})
+    }
+
     showGraph = (data) =>  {
 
-        this.setState({ code: data });
+        this.setState({ code: data});
+        
     }
 
     AllRecord = () => {
 
-        let dataRows = this.state.data.map((data) => {
-            return (
-            <tr  className="country-row"  key={data.code} onClick={() => this.showGraph(data.code)}>
-                <td style={{textAlign: 'center'}}>{data.title}</td>
-                <td>{data.total_cases} &nbsp; {(data.total_new_cases_today !== 0) ? "(+" + data.total_new_cases_today + ")" : " "}</td>
-                <td className="negative">{data.total_deaths} &nbsp; {(data.total_new_deaths_today !== 0) ? "(+" + data.total_new_deaths_today + ")": ""}</td>
-                <td>{(data.total_recovered !== 0) ? data.total_recovered : "Not Available or 0" }</td>
-                <td>{data.total_active_cases}</td>
-                <td className="negative">{data.total_serious_cases}</td>
-            </tr>);
-        });
+        let dataRows = []
+        if (this.state.country) {
+
+             dataRows = this.state.data.map((data) => {
+                return (
+                <tr  className="country-row"  key={data.code} onClick={() => this.showGraph(data.code)}>
+                    <td style={{textAlign: 'center'}}>{data.title}</td>
+                    <td>{data.total_cases} &nbsp; {(data.total_new_cases_today !== 0) ? "(+" + data.total_new_cases_today + ")" : " "}</td>
+                    <td className="negative">{data.total_deaths} &nbsp; {(data.total_new_deaths_today !== 0) ? "(+" + data.total_new_deaths_today + ")": ""}</td>
+                    <td>{(data.total_recovered !== 0) ? data.total_recovered : "-" }</td>
+                    <td>{data.total_active_cases}</td>
+                    <td className="negative">{data.total_serious_cases}</td>
+                </tr>);
+            });
+        } else {
+             dataRows = this.state.data.map((data) => {
+                return (
+                <tr  className="country-row"  key={data.code} onClick={() => this.showGraph(data.code)}>
+                    <td style={{textAlign: 'center'}}>{data.title}</td>
+                    <td>{data.total_cases} &nbsp; {(data.total_new_cases_today !== 0) ? "(+" + data.total_new_cases_today + ")" : " "}</td>
+                    <td className="negative">{data.total_deaths} &nbsp; {(data.total_new_deaths_today !== 0) ? "(+" + data.total_new_deaths_today + ")": ""}</td>
+                    <td>{(data.total_recovered !== 0) ? data.total_recovered : "-" }</td>
+                    <td>{data.total_active_cases}</td>
+                    <td className="negative">{data.total_serious_cases}</td>
+                </tr>);
+            });
+            return dataRows;
+        }
         return dataRows;
     }
 
@@ -115,13 +146,15 @@ class AllCountryData extends React.Component {
                     </div>
                     <div style={{padding: '8px', marginTop:'10px'}} className="ui message">
                         <div className="header">
-                            * Click on any column title to sort it according to that (Ascending.)
+                            * Click on any column title to sort it according to that (Descending except Country Name (Ascending)).
                         </div>
                     </div>
-                    <table className="ui stackable celled table">
+                    <button id="march" className={(this.state.country) ? "small ui secondary button" : "small ui button" } style={{color: '#3e9b39'}} onClick={this.worldDetails} >World</button> &nbsp;
+                    <button id="march" className={(this.state.country) ? "small ui button" : "small ui secondary button"} style={{color: '#3e9b39'}} onClick={this.indiaDetails}>India</button>
+                    <table style={{borderCollapse: 'separate', borderSpacing: '5px 5px  ', borderRadius: '20px', background:'transparent'}} className="ui stackable celled table">
                     <thead>   
                         <tr>
-                        <th onClick={() => this.dataSort("title")}>Country Name</th>
+                        <th onClick={() => this.dataSort("title")}>{this.state.location}</th>
                         <th onClick={() => this.dataSort("total_cases")}>Total Cases</th>
                         <th onClick={() => this.dataSort("total_deaths")}>Total Deaths</th>
                         <th onClick={() => this.dataSort("total_recovered")}>Total Recovered</th>

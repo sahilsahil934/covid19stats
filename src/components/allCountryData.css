@@ -3,3 +3,10 @@
     cursor: pointer;    
 }
   
+
+td, th {
+    border-radius: 15px;
+    background: white;
+    color: darkblue;
+    text-align: center;
+}
