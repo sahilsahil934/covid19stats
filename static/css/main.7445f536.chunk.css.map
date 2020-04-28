@@ -1,0 +1,1 @@
+{"version":3,"sources":["allCountryData.css"],"names":[],"mappings":"AAAA,aAEI,cACJ,CAGA,MACI,kBAAmB,CACnB,eAAiB,CACjB,aAAe,CACf,iBACJ","file":"main.7445f536.chunk.css","sourcesContent":[".country-row {\r\n\r\n    cursor: pointer;    \r\n}\r\n  \r\n\r\ntd, th {\r\n    border-radius: 15px;\r\n    background: white;\r\n    color: darkblue;\r\n    text-align: center;\r\n}"]}
