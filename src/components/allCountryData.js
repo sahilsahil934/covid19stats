@@ -121,7 +121,7 @@ class AllCountryData extends React.Component {
                 <tr  className="country-row"  key={data.statecode}>
                     <td style={{textAlign: 'center'}}>{data.state}</td>
                     <td>{data.confirmed} </td>
-                    <td className="negative">{data.deaths}}</td>
+                    <td className="negative">{data.deaths}</td>
                     <td>{data.recovered}</td>
                     <td>{data.active}</td>
                     <td className="negative">Not available</td>
@@ -151,8 +151,8 @@ class AllCountryData extends React.Component {
                             * Click on any column title to sort it according to that (Descending except Country Name (Ascending)).
                         </div>
                     </div>
-                    <button id="march" className={(this.state.country) ? "small ui secondary button" : "small ui button" } style={{color: '#3e9b39'}} onClick={this.worldDetails} >World</button> &nbsp;
-                    <button id="march" className={(this.state.country) ? "small ui button" : "small ui secondary button"} style={{color: '#3e9b39'}} onClick={this.indiaDetails}>India</button>
+                    <button id="march" className={(this.state.country) ? "small ui green button" : "small ui button" }  onClick={this.worldDetails} >World</button> &nbsp;
+                    <button id="march" className={(this.state.country) ? "small ui button" : "small ui green button"}  onClick={this.indiaDetails}>India</button>
                     &nbsp; [Sorting and Detailed graph for each state is not avaiable yet for India]
                     <table style={{borderCollapse: 'separate', borderSpacing: '5px 5px  ', borderRadius: '20px', background:'transparent'}} className="ui stackable celled table">
                     <thead>   
