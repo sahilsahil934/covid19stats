@@ -12,6 +12,7 @@ class AllCountryData extends React.Component {
         location: 'Country Name',
         indiaData: [],
         isCountry: true,
+        clickedOnCountry: true
     };
 
     componentDidMount() {
@@ -105,8 +106,12 @@ class AllCountryData extends React.Component {
 
     showGraph = (data) =>  {
 
-        this.setState({ code: data});
+        this.setState({ code: data, clickedOnCountry: true});
         
+    }
+
+    stateGraph = (data) => {
+        this.setState({ code: data, clickedOnCountry: false  })
     }
 
     AllRecord = () => {
@@ -128,7 +133,7 @@ class AllCountryData extends React.Component {
         } else {
              dataRows = this.state.indiaData.map((data) => {
                 return (
-                <tr  className="country-row"  key={data.statecode}>
+                <tr  className="country-row"  key={data.statecode} onClick={() => this.stateGraph(data.statecode)}>
                     <td style={{textAlign: 'center'}}>{data.state}</td>
                     <td>{data.confirmed} &nbsp; {(data.deltaconfirmed !== "0") ? "(+" + data.deltaconfirmed + ")" : " "} </td>
                     <td className="negative">{data.deaths} &nbsp; {(data.deltadeaths !== "0") ? "(+" + data.deltadeaths + ")" : " "}</td>
@@ -163,7 +168,7 @@ class AllCountryData extends React.Component {
                     </div>
                     <button id="march" className={(this.state.isCountry) ? "small ui green button" : "small ui button" }  onClick={this.worldDetails} >World</button> &nbsp;
                     <button id="march" className={(this.state.isCountry) ? "small ui button" : "small ui green button"}  onClick={this.indiaDetails}>India</button>
-                    &nbsp; [Detailed graph for each state is not avaiable yet for India]
+                    &nbsp; [* Detailed graph for each state of India is available now.]
                     <table style={{borderCollapse: 'separate', borderSpacing: '5px 5px  ', borderRadius: '20px', background:'transparent'}} className="ui stackable celled table">
                     <thead>   
                         <tr >
@@ -183,7 +188,7 @@ class AllCountryData extends React.Component {
 
                     <div style={{marginTop: '20px'}} className="ui sticky fixed six wide column center page grid">
                             <div className="ui fixed sticky">
-                            <LineChart code={this.state.code} />
+                            <LineChart code={[this.state.clickedOnCountry, this.state.code]} />
                             <div className="ui message">
                                 <div className="header">
                                     Support

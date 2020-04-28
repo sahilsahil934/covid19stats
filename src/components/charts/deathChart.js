@@ -1,12 +1,17 @@
 import React from 'react';
 import allWorldData from '../../api/allWorldData'
 import {Bar} from 'react-chartjs-2';
+import indiaStateData from './../../api/indiaStateData'
+import stateCode from './../../data/indiaCodeToStateData.json'
 
 class DeathChart extends React.Component {
 
     state = {
         requiredDate: '',
+        indiaDataRecieved: 0,
         country: '',
+        mName: ["Jan", "Feb", "Mar", "Apr", "May"],
+        statesData: [],
         month: 0,
         code: '',
         year: 0,
@@ -29,10 +34,17 @@ class DeathChart extends React.Component {
       }
 
     componentDidUpdate(prevProps) {
-        if (JSON.stringify(this.props.code) !== JSON.stringify(prevProps.code)) {
-        let dates = this.requiredDate(this.props.code[1]);  
-        this.totalCasesRequest(this.props.code[0], dates);
-        
+        if (this.props.code[2]) {
+            if (JSON.stringify(this.props.code) !== JSON.stringify(prevProps.code)) {
+            let dates = this.requiredDate(this.props.code[1]);  
+            this.totalCasesRequest(this.props.code[0], dates);
+        } 
+    }else {
+            if (JSON.stringify(this.props.code) !== JSON.stringify(prevProps.code)) {
+                let dates = this.requiredDate();  
+                this.totalCasesRequest(this.props.code[0], dates);
+                
+            }
         }
     }
 
@@ -45,77 +57,178 @@ class DeathChart extends React.Component {
 
     totalCasesRequest = async (country, dates) => {
 
-        const response = await allWorldData.get(country);
-        const result = response.data;
-        let cases = []
+        if (this.props.code[2]) {
+
+            const response = await allWorldData.get(country);
+            const result = response.data;
+            let cases = []
 
 
-        try {
-             cases= dates.map(date => result.timelineitems[0][date].new_daily_deaths);
-             this.setState({
-                country: result.countrytimelinedata[0].info.title,
-                allRecord: result.timelineitems,
-                datasets: [
-                    {
-                      label: 'Deaths',
-                      fill: false,
-                      lineTension: 0.5,
-                      barThickness: 8,
-                      hoverBackgroundColor: 'black',
-                      backgroundColor: 'red',
-                      borderColor: 'rgba(0, 0, 0, 1)',
-                      borderWidth: 1,
-                      data: cases
+            try {
+                cases= dates.map(date => result.timelineitems[0][date].new_daily_deaths);
+                this.setState({
+                    country: result.countrytimelinedata[0].info.title,
+                    allRecord: result.timelineitems,
+                    datasets: [
+                        {
+                        label: 'Deaths',
+                        fill: false,
+                        lineTension: 0.5,
+                        barThickness: 8,
+                        hoverBackgroundColor: 'black',
+                        backgroundColor: 'red',
+                        borderColor: 'rgba(0, 0, 0, 1)',
+                        borderWidth: 1,
+                        data: cases
+                        }
+                    ],
+                    code: country
+                });
+            }
+            catch(e) {
+                this.notRecievedHandler(country)
+            
+            }
+        } else {
+
+
+            if (this.state.indiaDataRecieved === 0) {
+
+                const response = await indiaStateData.get();
+                let result = response.data.states_daily;
+                console.log(result)
+                let importantData = []
+                let count = 0;
+                let x = '';
+                let length = result.length;
+                for (let i = 0; i < length; i++) {
+
+                    if (count >= dates.length) {
+                        break;
+                    } else {
+                        x = result.pop();
+                        if (x.status === "Deceased") {
+                            console.log(x)
+                            importantData.push(x);
+                            count = count + 1;
+                        }
+                        
                     }
-                  ],
-                  code: country
-            });
-        }
-        catch(e) {
-            this.notRecievedHandler(country)
+                }
+                let importantDataReveresed = importantData.reverse();                
+                this.setState({indiaDataRecieved: 1, statesData: importantDataReveresed})
+            }
+            
+            let cases = []
+            let data = this.state.statesData;
+            let requiredCode = country.toLowerCase()
+            cases = data.map((data) => parseInt(data[requiredCode]))
+            console.log(cases)  
+                
+
+                this.setState({
+                    get: 0,
+                    recieved: true,
+                    country: stateCode[country],
+                    datasets: [
+                        {
+                        label: 'Death',
+                        fill: false,
+                        lineTension: 0.5,
+                        barThickness: 8,
+                        hoverBackgroundColor: 'black',
+                        backgroundColor: 'red',
+                        borderColor: 'rgba(0,0,0,1)',
+                        borderWidth: 1,
+                        data: cases
+                        }
+                    ],
+                    code: country
+                });
         
+
         }
-
-
     }
 
 
 
+
+
     requiredDate = (monthVal=0) => {
-        let newDate = new Date();
-        let date = newDate.getDate() - 1;
-        let month = newDate.getMonth() + 1;
-        let year = newDate.getFullYear();
-        if (monthVal !== 0) {
-            month = monthVal;
-            date = new Date(year, monthVal, 0).getDate()
-        } 
-        let x = year % 10;
-        let newYear = parseInt(year / 10);
-        let y = newYear % 10;
-        let shortYear = (y * 10) + x;
-        let requireDate = month.toString() + '/' + date.toString() + '/' + shortYear.toString();
-        let dates = [];
-        for (let i = 1; i <= date; i++) {
-            if (i < 10) {
-                dates.push(month.toString() + '/0' + i.toString() + '/' + shortYear.toString())
-            } else {
-                dates.push(month.toString() + '/' + i.toString() + '/' + shortYear.toString())
+        
+        if (this.props.code[2]) {
+            let newDate = new Date();
+            let date = newDate.getDate() - 1;
+            let month = newDate.getMonth() + 1;
+            let year = newDate.getFullYear();
+            if (monthVal !== 0) {
+                month = monthVal;
+                date = new Date(year, monthVal, 0).getDate()
+            } 
+            let x = year % 10;
+            let newYear = parseInt(year / 10);
+            let y = newYear % 10;
+            let shortYear = (y * 10) + x;
+            let requireDate = month.toString() + '/' + date.toString() + '/' + shortYear.toString();
+            let dates = [];
+            for (let i = 1; i <= date; i++) {
+                if (i < 10) {
+                    dates.push(month.toString() + '/0' + i.toString() + '/' + shortYear.toString())
+                } else {
+                    dates.push(month.toString() + '/' + i.toString() + '/' + shortYear.toString())
+                }
             }
-        }
 
-        let xdates = [];
-        for (let i = 1; i <= date; i++) {
-            if (i < 10) {
-                xdates.push(month.toString() + '/0' + i.toString())
-            } else {
-                xdates.push(month.toString() + '/' + i.toString())
+            let xdates = [];
+            for (let i = 1; i <= date; i++) {
+                if (i < 10) {
+                    xdates.push(month.toString() + '/0' + i.toString())
+                } else {
+                    xdates.push(month.toString() + '/' + i.toString())
+                }
             }
+
+            this.setState({todayDate: requireDate, month: month, year: shortYear, labels: xdates});
+
+            return dates;
+        } else {
+
+            let newDate = new Date();
+            let date = newDate.getDate() - 1;
+            let month = newDate.getMonth() + 1;
+            let monthName = this.state.mName[month - 1]
+            let year = newDate.getFullYear();
+            if (monthVal !== 0) {
+                month = monthVal;
+                date = new Date(year, monthVal, 0).getDate()
+            } 
+            let x = year % 10;
+            let newYear = parseInt(year / 10);
+            let y = newYear % 10;
+            let shortYear = (y * 10) + x;
+            let requireDate = month.toString() + '/' + date.toString() + '/' + shortYear.toString();
+            let dates = [];
+            for (let i = 1; i <= date; i++) {
+                if (i < 10) {
+                    dates.push('0' + i.toString() + '/' + monthName[month - 1] + '/' + shortYear.toString())
+                } else {
+                    dates.push(i.toString() + '/' + monthName[month - 1] + '/' + shortYear.toString())
+                }
+            }
+            let xdates = [];
+            for (let i = 1; i <= date; i++) {
+                if (i < 10) {
+                    xdates.push(month.toString() + '/0' + i.toString())
+                } else {
+                    xdates.push(month.toString() + '/' + i.toString())
+                }
+            }
+
+            this.setState({todayDate: requireDate, month: month, year: shortYear, labels: xdates});
+
+            return dates;
+
         }
-
-        this.setState({todayDate: requireDate, month: month, year: shortYear, labels: xdates});
-
-        return dates;
     }
       
         render() {
