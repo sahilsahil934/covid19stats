@@ -158,21 +158,21 @@ class AllCountryData extends React.Component {
                     </div>
                     <div style={{padding: '8px', marginTop:'10px'}} className="ui message">
                         <div className="header">
-                            * Click on any column title to sort it according to that (Descending except Country Name (Ascending)).
+                            * Click on any column title to sort it according to that (Descending except {this.state.location} (Ascending)).
                         </div>
                     </div>
                     <button id="march" className={(this.state.isCountry) ? "small ui green button" : "small ui button" }  onClick={this.worldDetails} >World</button> &nbsp;
                     <button id="march" className={(this.state.isCountry) ? "small ui button" : "small ui green button"}  onClick={this.indiaDetails}>India</button>
-                    &nbsp; [Sorting and Detailed graph for each state is not avaiable yet for India]
+                    &nbsp; [Detailed graph for each state is not avaiable yet for India]
                     <table style={{borderCollapse: 'separate', borderSpacing: '5px 5px  ', borderRadius: '20px', background:'transparent'}} className="ui stackable celled table">
                     <thead>   
-                        <tr>
-                        <th style={{textAlign: 'center'}} onClick={() => this.dataSort((this.state.isCountry) ? "title" : "state")}>{this.state.location}</th>
-                        <th onClick={() => this.dataSort((this.state.isCountry) ? "total_cases" : "confirmed")}>Total Cases</th>
-                        <th onClick={() => this.dataSort((this.state.isCountry) ? "total_deaths" : "deaths")}>Total Deaths</th>
-                        <th onClick={() => this.dataSort((this.state.isCountry) ? "total_recovered" : "recovered")}>Total Recovered</th>
-                        <th onClick={() => this.dataSort((this.state.isCountry) ? "total_active_cases" : "active")}>Active Cases</th>
-                        <th onClick={() => this.dataSort((this.state.isCountry) ? "total_serious_cases" : "confirmed")}>Serious Cases</th>
+                        <tr >
+                        <th style={{textAlign: 'center', cursor: 'pointer'}} onClick={() => this.dataSort((this.state.isCountry) ? "title" : "state")}>{this.state.location}</th>
+                        <th style={{cursor: 'pointer'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_cases" : "confirmed")}>Total Cases</th>
+                        <th style={{cursor: 'pointer'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_deaths" : "deaths")}>Total Deaths</th>
+                        <th style={{cursor: 'pointer'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_recovered" : "recovered")}>Total Recovered</th>
+                        <th style={{cursor: 'pointer'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_active_cases" : "active")}>Active Cases</th>
+                        <th style={{cursor: 'pointer'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_serious_cases" : "confirmed")}>Serious Cases</th>
                         </tr>
                     </thead>
                     <tbody >

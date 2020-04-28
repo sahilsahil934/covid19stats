@@ -9,4 +9,14 @@ td, th {
     background: white;
     color: darkblue;
     text-align: center;
+    position: relative;
+    font-family: cursive, sans-serif;
+    align-items: center;
+    text-align: center;
+}
+
+td:active, th:active {
+    box-shadow: 0px 0px #009de4;
+    top: 4px;
+
 }
