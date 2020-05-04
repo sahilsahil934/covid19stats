@@ -42,41 +42,39 @@ class TotalStats extends React.Component {
     render() {
 
         return (
-            <div style={{ marginLeft:'10px', marginRight:'10px', marginTop: '40px', align: 'center' }} className="ui column center page grid">  
-                <div style={{ marginBottom: '0'}} className="ui five item menu">
-                    <div className="item">Total Cases</div>
-                    <div className="item active">Total Deaths</div>
-                    <div className="item">Total Recovered</div>
-                    <div className="item">Active Cases</div>
-                    <div className="item">Serious Cases</div>
-
-                </div>  
-                <div style={{marginTop: '0'}} className="ui five item menu">
-                    <div className="item">
-                            <div style={{color: 'gray'}} className="value">
-                                <h3>{this.state.total} &nbsp; (+{this.state.newCases})</h3>
-                            </div>               
-                    </div>
-                    <div className="item">
-                            <div style={{color: 'red'}} className="value">
-                                <h3>{this.state.death} &nbsp; (+{this.state.newDeath})</h3>
-                            </div>                      
-                    </div>
-                    <div style={{color: 'lightgreen'}} className="item">
-                            <div className="value">
-                                <h3>{this.state.recovered}</h3>
-                            </div>                                              
-                    </div>
-                    <div style={{color: 'darkyellow'}} className="item">
-                            <div className="value">
-                                <h3>{this.state.activeCases}</h3>
-                            </div>                                              
-                    </div>
-                    <div style={{color: 'red'}} className="item">
-                            <div className="value">
-                                <h3>{this.state.seriousCases}</h3>
-                            </div>                                              
-                    </div>
+            <div style={{ margin:'auto', marginTop: '70px', align: 'center' }} className="container">  
+                <div style={{ marginBottom: '0'}} className="row">
+                <div class="card bg-light mb-3 mr-2 col-sm-3" style={{maxWidth: '15rem', border: '1px solid black'}}>
+                <div class="card-header">Total Cases</div>
+                <div class="card-body">
+                    <h5 class="card-title">{this.state.total} &nbsp; (+{this.state.newCases})</h5>
+                </div>
+                </div>
+                <div class="card text-white bg-danger mb-3 mr-2 col-sm-3" style={{maxWidth: '15rem', border: '1px solid black'}}>
+                <div class="card-header">Total Deaths</div>
+                <div class="card-body">
+                    <h5 class="card-title">{this.state.death} &nbsp; (+{this.state.newDeath})</h5>
+                </div>
+                </div>
+                <div class="card bg-light mb-3 mr-2 col-sm-2" style={{maxWidth: '15rem', border: '1px solid black'}}>
+                <div class="card-header">Total Recovered</div>
+                <div class="card-body">
+                    <h5 class="card-title">{this.state.recovered}</h5>
+                </div>
+                </div>
+                <div class="card bg-light mb-3 mr-2 col-sm-2" style={{maxWidth: '15rem', border: '1px solid black'}}>
+                <div class="card-header">Active Cases</div>
+                <div class="card-body">
+                    <h5 class="card-title">{this.state.activeCases}</h5>
+                </div>
+                </div>
+                <div class="card bg-light mb-3 mr-2 col-sm-2" style={{maxWidth: '15rem', border: '1px solid black'}}>
+                <div class="card-header">Serious Cases</div>
+                <div class="card-body">
+                    <h5 class="card-title">{this.state.seriousCases}</h5>
+                </div>
+                </div>
+                    
                 </div>
             </div>
         );

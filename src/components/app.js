@@ -10,9 +10,12 @@ class App extends React.Component {
 
         return (
             <div>
-                <Title />  
-                <TotalStats />
-               <AllCountryData />   
+                <div className="container-fluid">
+                    <Title />  
+                    <TotalStats />
+                    <AllCountryData /> 
+                </div>
+                  
             </div>
         );
     }
