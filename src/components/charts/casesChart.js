@@ -10,7 +10,7 @@ class LineChart extends React.Component {
     state = {
         get: 0,
         currentMonth: true,
-        monthValue:2,
+        monthValue:3,
         mName: ["Jan", "Feb", "Mar", "Apr", "May"],
         recieved: true,
         requiredDate: '',
@@ -54,14 +54,14 @@ class LineChart extends React.Component {
                 let dates = this.requiredDate();  
                 
                 this.totalCasesRequest(this.props.code[1], dates);
-                this.setState({monthValue: 2 })
+                this.setState({monthValue: 3 })
             }
         } else {
             if (JSON.stringify(this.props.code) !== JSON.stringify(prevProps.code)) {
                 let dates = this.requiredDate();  
                 
                 this.totalCasesRequest(this.props.code[1], dates);
-                this.setState({monthValue: 2})
+                this.setState({monthValue: 3})
             }
 
         }
@@ -273,12 +273,12 @@ class LineChart extends React.Component {
     }
 
     marchData = () => {
-        if (this.state.monthValue === 2) {
+        if (this.state.monthValue === 3) {
             let month = this.state.month
             this.setState({monthValue: month - 1, originalMonth: month})
-            this.notRecievedHandler(this.state.code, 3)
+            this.notRecievedHandler(this.state.code, 4)
         } else {
-            this.setState({monthValue: 2})
+            this.setState({monthValue: 4})
             this.notRecievedHandler(this.state.code, this.state.originalMonth)
 
         }
@@ -331,7 +331,8 @@ class LineChart extends React.Component {
                 <div className="ui message">
                     <div className="header">
                         <div>
-                    Country : {this.state.country} &nbsp; <button id="current" className="small ui green button">{this.state.mlist[this.state.month - 1]}</button> &nbsp; &nbsp;
+                    {(this.props.code[0]) ? "Country" : (this.props.code[1] === "TT") ? "Country" : "State"} : {this.state.country} &nbsp; 
+                    <button id="current" className="small ui green button">{this.state.mlist[this.state.month - 1]}</button> &nbsp; &nbsp;
                 {button} 
             </div>
                         </div>
