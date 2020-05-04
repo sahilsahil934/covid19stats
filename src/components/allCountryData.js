@@ -124,10 +124,10 @@ class AllCountryData extends React.Component {
                 <tr  className="country-row"  key={data.code} onClick={() => this.showGraph(data.code)}>
                     <td style={{textAlign: 'center'}}>{data.title}</td>
                     <td>{data.total_cases} &nbsp; {(data.total_new_cases_today !== 0) ? "(+" + data.total_new_cases_today + ")" : " "}</td>
-                    <td className="negative">{data.total_deaths} &nbsp; {(data.total_new_deaths_today !== 0) ? "(+" + data.total_new_deaths_today + ")": ""}</td>
+                    <td style={{color: 'darkred'}}>{data.total_deaths} &nbsp; {(data.total_new_deaths_today !== 0) ? "(+" + data.total_new_deaths_today + ")": ""}</td>
                     <td>{(data.total_recovered !== 0) ? data.total_recovered : "-" }</td>
                     <td>{data.total_active_cases}</td>
-                    <td className="negative">{data.total_serious_cases}</td>
+                    <td style={{color: 'darkred'}}>{data.total_serious_cases}</td>
                 </tr>);
             });
         } else {
@@ -136,10 +136,10 @@ class AllCountryData extends React.Component {
                 <tr  className="country-row"  key={data.statecode} onClick={() => this.stateGraph(data.statecode)}>
                     <td style={{textAlign: 'center'}}>{data.state}</td>
                     <td>{data.confirmed} &nbsp; {(data.deltaconfirmed !== "0") ? "(+" + data.deltaconfirmed + ")" : " "} </td>
-                    <td className="negative">{data.deaths} &nbsp; {(data.deltadeaths !== "0") ? "(+" + data.deltadeaths + ")" : " "}</td>
+                    <td style={{background: '#F1F1F1'}}>{data.deaths} &nbsp; {(data.deltadeaths !== "0") ? "(+" + data.deltadeaths + ")" : " "}</td>
                     <td>{data.recovered} &nbsp; {(data.deltarecovered !== "0") ? "(+" + data.deltarecovered + ")" : " "}</td>
                     <td>{data.active}</td>
-                    <td className="negative">Not available</td>
+                    <td style={{background: '#E1E1E1'}}>Not available</td>
                 </tr>);
             });
         }
@@ -152,32 +152,29 @@ class AllCountryData extends React.Component {
 
         return (
     
-            <div className="ui conatiner">
-            <div className="ui grid">
-                <div className="ui row">
-                    <div style={{margin: 'auto', marginTop:'10px', marginBottom: '0px'}}className="nine wide column">
-                    <div style={{padding: '8px', marginTop:'0px', marginBottom: '0px'}} className="ui message">
-                        <div className="header">
-                            Click on any country row to view the detailed graph. (Updation and Loading of graphs takes time according to you Internet speed.)
-                        </div>
+            <div className="conatiner">
+                    <div className="row">
+
+                    <div style={{margin: 'auto', marginTop:'10px', marginBottom: '0px'} } className="col-md-8 col-xs-12">
+    
+                    <div className="alert alert-success" style={{border: '1px solid', padding: '8px', width: 'auto'}} role="alert">
+                        Click on any country row to view the detailed graph. (Updation and Loading of graphs takes time according to your Internet speed.)
                     </div>
-                    <div style={{padding: '8px', marginTop:'10px'}} className="ui message">
-                        <div className="header">
+                    <div className="alert alert-primary" style={{border: '1px solid', padding: '8px'}} role="alert">
                             * Click on any column title to sort it according to that (Descending except {this.state.location} (Ascending)).
-                        </div>
-                    </div>
-                    <button id="march" className={(this.state.isCountry) ? "small ui green button" : "small ui button" }  onClick={this.worldDetails} >World</button> &nbsp;
-                    <button id="march" className={(this.state.isCountry) ? "small ui button" : "small ui green button"}  onClick={this.indiaDetails}>India</button>
+                    </div>                   
+                    <button id="march" className={(this.state.isCountry) ? "btn btn-success" : "btn btn-light" }  onClick={this.worldDetails} >World</button> &nbsp;
+                    <button id="march" className={(this.state.isCountry) ? "btn btn-light" : "btn btn-success"}  onClick={this.indiaDetails}>India</button>
                     &nbsp; [* Detailed graph for each state of India is available now.]
-                    <table style={{borderCollapse: 'separate', borderSpacing: '5px 5px  ', borderRadius: '20px', background:'transparent'}} className="ui stackable celled table">
+                    <table style={{borderCollapse: 'separate', borderSpacing: '5px 5px', borderRadius: '20px', background:'transparent', marginTop: '10px'}} className="table table-striped">
                     <thead>   
                         <tr >
-                        <th style={{textAlign: 'center', cursor: 'pointer'}} onClick={() => this.dataSort((this.state.isCountry) ? "title" : "state")}>{this.state.location}</th>
-                        <th style={{cursor: 'pointer'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_cases" : "confirmed")}>Total Cases</th>
-                        <th style={{cursor: 'pointer'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_deaths" : "deaths")}>Total Deaths</th>
-                        <th style={{cursor: 'pointer'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_recovered" : "recovered")}>Total Recovered</th>
-                        <th style={{cursor: 'pointer'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_active_cases" : "active")}>Active Cases</th>
-                        <th style={{cursor: 'pointer'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_serious_cases" : "confirmed")}>Serious Cases</th>
+                        <th style={{textAlign: 'center', cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "title" : "state")}>{this.state.location}</th>
+                        <th style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_cases" : "confirmed")}>Total Cases</th>
+                        <th style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_deaths" : "deaths")}>Total Deaths</th>
+                        <th style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_recovered" : "recovered")}>Total Recovered</th>
+                        <th style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_active_cases" : "active")}>Active Cases</th>
+                        <th style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_serious_cases" : "confirmed")}>Serious Cases</th>
                         </tr>
                     </thead>
                     <tbody >
@@ -185,33 +182,13 @@ class AllCountryData extends React.Component {
                     </tbody>
                 </table>
                     </div>
-
-                    <div style={{marginTop: '20px'}} className="ui sticky fixed six wide column center page grid">
-                            <div className="ui fixed sticky">
+                    <div style={{margin: 'auto', marginTop: '0px'}} className="container-fluid col-md-4 col-xs-12">
+                            <div  style={{marginTop: '0px', paddingTop: '60px'}} className="position-sticky">
                             <LineChart code={[this.state.clickedOnCountry, this.state.code]} />
-                            <div className="ui message">
-                                <div className="header">
-                                    Support
-                                </div>
-                                <ul className="list">
-                                    <li>To Contribute : <a href="https://github.com/iamsahil1910/covid19stats">Click Here</a></li>
-                                    <li>To provide detailed data country API: Email: <a href="mailto:iamsahil1910@gmail.com">iamsaihl1910@gmail.com</a></li>
-                                </ul>
-                            </div>
-                            <div className="ui message">
-                                <div className="header">
-                                    New Site Features
-                                </div>
-                                <ul className="list">
-                                    <li>World Data: <a href="https://thevirustracker.com/">The Virus Tracker</a></li>
-                                    <li>India data (coming soon): <a href="https://www.covid19india.org">Covid19India</a></li>
-                                </ul>
-                            </div>
-                            </div>
                             </div>  
                     
-                </div>
-            </div>
+                    </div>
+                    </div>
             </div>
         );
     }

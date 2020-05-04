@@ -45,33 +45,33 @@ class TotalStats extends React.Component {
             <div style={{ margin:'auto', marginTop: '70px', align: 'center' }} className="container">  
                 <div style={{ marginBottom: '0'}} className="row">
                 <div class="card bg-light mb-3 mr-2 col-sm-3" style={{maxWidth: '15rem', border: '1px solid black'}}>
-                <div class="card-header">Total Cases</div>
+                <div class="card-header" style={{color: 'darkbrown'}}>Total Cases</div>
                 <div class="card-body">
-                    <h5 class="card-title">{this.state.total} &nbsp; (+{this.state.newCases})</h5>
+                    <h5 class="card-title" style={{color: 'green'}}>{this.state.total} &nbsp; (+{this.state.newCases})</h5>
                 </div>
                 </div>
-                <div class="card text-white bg-danger mb-3 mr-2 col-sm-3" style={{maxWidth: '15rem', border: '1px solid black'}}>
-                <div class="card-header">Total Deaths</div>
+                <div class="card bg-light mb-3 mr-2 col-sm-3" style={{maxWidth: '15rem', border: '1px solid black'}}>
+                <div class="card-header" style={{color: 'darkbrown'}}>Total Deaths</div>
                 <div class="card-body">
-                    <h5 class="card-title">{this.state.death} &nbsp; (+{this.state.newDeath})</h5>
+                    <h5 class="card-title" style={{color: 'red'}}>{this.state.death} &nbsp; (+{this.state.newDeath})</h5>
                 </div>
                 </div>
                 <div class="card bg-light mb-3 mr-2 col-sm-2" style={{maxWidth: '15rem', border: '1px solid black'}}>
-                <div class="card-header">Total Recovered</div>
+                <div class="card-header" style={{color: 'darkbrown'}}>Total Recovered</div>
                 <div class="card-body">
-                    <h5 class="card-title">{this.state.recovered}</h5>
+                    <h5 class="card-title" style={{color: 'orange'}}>{this.state.recovered}</h5>
                 </div>
                 </div>
                 <div class="card bg-light mb-3 mr-2 col-sm-2" style={{maxWidth: '15rem', border: '1px solid black'}}>
-                <div class="card-header">Active Cases</div>
+                <div class="card-header" style={{color: 'darkbrown'}}>Active Cases</div>
                 <div class="card-body">
-                    <h5 class="card-title">{this.state.activeCases}</h5>
+                    <h5 class="card-title" style={{color: 'green'}}>{this.state.activeCases}</h5>
                 </div>
                 </div>
                 <div class="card bg-light mb-3 mr-2 col-sm-2" style={{maxWidth: '15rem', border: '1px solid black'}}>
-                <div class="card-header">Serious Cases</div>
+                <div class="card-header" style={{color: 'darkbrown'}}>Serious Cases</div>
                 <div class="card-body">
-                    <h5 class="card-title">{this.state.seriousCases}</h5>
+                    <h5 class="card-title" style={{color: 'red'}}>{this.state.seriousCases}</h5>
                 </div>
                 </div>
                     

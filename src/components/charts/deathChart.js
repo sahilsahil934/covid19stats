@@ -74,7 +74,7 @@ class DeathChart extends React.Component {
                         label: 'Deaths',
                         fill: false,
                         lineTension: 0.5,
-                        barThickness: 8,
+                        barThickness: 1,
                         hoverBackgroundColor: 'black',
                         backgroundColor: 'red',
                         borderColor: 'rgba(0, 0, 0, 1)',
@@ -240,6 +240,7 @@ class DeathChart extends React.Component {
                             options={{
                                 title:{
                                 display:true,
+                                responsive: true,
                                 text:'Death Graph (Hover over Bar to know Exact Value)',
                                 fontSize:15
                                 },

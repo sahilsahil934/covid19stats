@@ -178,7 +178,7 @@ class LineChart extends React.Component {
                         label: 'Cases',
                         fill: false,
                         lineTension: 0.5,
-                        barThickness: 8,
+                        barThickness: 1,
                         hoverBackgroundColor: 'black',
                         backgroundColor: 'darkgray',
                         borderColor: 'rgba(0,0,0,1)',
@@ -278,7 +278,7 @@ class LineChart extends React.Component {
             this.setState({monthValue: month - 1, originalMonth: month})
             this.notRecievedHandler(this.state.code, 4)
         } else {
-            this.setState({monthValue: 4})
+            this.setState({monthValue: 3})
             this.notRecievedHandler(this.state.code, this.state.originalMonth)
 
         }
@@ -289,7 +289,7 @@ class LineChart extends React.Component {
 
             let button = "";
             if (this.props.code[0]) {
-                button = <button id='march' className='small ui button' style={{color: '#3e9b39'}} onClick={this.marchData}>{this.state.mlist[this.state.monthValue]}</button>;
+                button = <button id='march' className='btn btn-light' style={{color: '#3e9b39'}} onClick={this.marchData}>{this.state.mlist[this.state.monthValue]}</button>;
            } else {
                button = "";
            }
@@ -298,8 +298,8 @@ class LineChart extends React.Component {
             return (
             <div>
 
-            <div className="ui message">
-                <div className="header">
+            <div className="alert">
+                <div className="">
                 {(this.props.code[0]) ? "Country" : "State"} : {this.state.country} &nbsp; ({this.state.mlist[this.state.month - 1]})
                     </div>
                  <p>Data not available. Try another country</p>
@@ -310,8 +310,8 @@ class LineChart extends React.Component {
 
             if (this.state.recieved === false) {
                 return (<div>
-                    <div className="ui message">
-                    <div className="header">Sorry! Error</div>
+                    <div className="alert">
+                    <div className="">Sorry! Error</div>
                     <ul>Reasons
                     <li>Country data not available</li>
                     <li>Can't fetch data</li>
@@ -325,23 +325,20 @@ class LineChart extends React.Component {
                      </div>);
             }
             return (
-               
-            <div>
-
-                <div className="ui message">
-                    <div className="header">
-                        <div>
+            <div className="container-sm">
+            <div style={{background: '#FDEDEC', padding: '20px', paddingTop: '5px', width: '100%'}}>
+                    <div className="mt-5 sticky-top">
                     {(this.props.code[0]) ? "Country" : (this.props.code[1] === "TT") ? "Country" : "State"} : {this.state.country} &nbsp; 
-                    <button id="current" className="small ui green button">{this.state.mlist[this.state.month - 1]}</button> &nbsp; &nbsp;
+                    <button id="current" className="btn btn-success">{this.state.mlist[this.state.month - 1]}</button> &nbsp; &nbsp;
                 {button} 
-            </div>
-                        </div>
-                        <div style={{height: '200px'}}>
+                    </div>
+                        <article style={{height: '100%'}}>
                         <Bar
                             data={this.state}
                             options={{
                                 title:{
                                 display:true,
+                                responsive: true,
                                 text:'Cases Graph (Hover over Bar to know Exact Value)',
                                 fontSize:15,
                                 },
@@ -351,10 +348,10 @@ class LineChart extends React.Component {
                                 }
                             }}
                          />    
-                        </div>
+                        </article>
                         <br />
                         <DeathChart code={[this.state.code, this.state.month, this.props.code[0]]} />
-                    </div>      
+            </div>
             </div>
             );
         }   
