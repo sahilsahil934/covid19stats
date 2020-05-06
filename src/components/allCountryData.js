@@ -121,13 +121,13 @@ class AllCountryData extends React.Component {
 
              dataRows = this.state.data.map((data) => {
                 return (
-                <tr  className="country-row"  key={data.code} onClick={() => this.showGraph(data.code)}>
-                    <td style={{textAlign: 'center'}}>{data.title}</td>
-                    <td>{data.total_cases} &nbsp; {(data.total_new_cases_today !== 0) ? "(+" + data.total_new_cases_today + ")" : " "}</td>
-                    <td style={{color: 'darkred'}}>{data.total_deaths} &nbsp; {(data.total_new_deaths_today !== 0) ? "(+" + data.total_new_deaths_today + ")": ""}</td>
-                    <td>{(data.total_recovered !== 0) ? data.total_recovered : "-" }</td>
-                    <td>{data.total_active_cases}</td>
-                    <td style={{color: 'darkred'}}>{data.total_serious_cases}</td>
+                <tr  className="country-row col-xs-2"  key={data.code} onClick={() => this.showGraph(data.code)}>
+                    <td className="col-xs-2" style={{textAlign: 'center'}}>{data.title}</td>
+                    <td className="col-xs-2">{data.total_cases} &nbsp; {(data.total_new_cases_today !== 0) ? "(+" + data.total_new_cases_today + ")" : " "}</td>
+                    <td className="col-xs-2" style={{color: 'darkred'}}>{data.total_deaths} &nbsp; {(data.total_new_deaths_today !== 0) ? "(+" + data.total_new_deaths_today + ")": ""}</td>
+                    <td className="col-xs-2">{(data.total_recovered !== 0) ? data.total_recovered : "-" }</td>
+                    <td className="col-xs-2">{data.total_active_cases}</td>
+                    <td className="col-xs-2" style={{color: 'darkred'}}>{data.total_serious_cases}</td>
                 </tr>);
             });
         } else {
@@ -155,7 +155,7 @@ class AllCountryData extends React.Component {
             <div className="conatiner">
                     <div className="row">
 
-                    <div style={{margin: 'auto', marginTop:'10px', marginBottom: '0px'} } className="col-md-8 col-xs-12">
+                    <div style={{margin: 'auto', marginTop:'10px', marginBottom: '0px'} } className="col-md-8 col-xs-10">
     
                     <div className="alert alert-success" style={{border: '1px solid', padding: '8px', width: 'auto'}} role="alert">
                         Click on any country row to view the detailed graph. (Updation and Loading of graphs takes time according to your Internet speed.)
@@ -169,12 +169,12 @@ class AllCountryData extends React.Component {
                     <table style={{borderCollapse: 'separate', borderSpacing: '5px 5px', borderRadius: '20px', background:'transparent', marginTop: '10px'}} className="table table-striped">
                     <thead>   
                         <tr >
-                        <th style={{textAlign: 'center', cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "title" : "state")}>{this.state.location}</th>
-                        <th style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_cases" : "confirmed")}>Total Cases</th>
-                        <th style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_deaths" : "deaths")}>Total Deaths</th>
-                        <th style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_recovered" : "recovered")}>Total Recovered</th>
-                        <th style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_active_cases" : "active")}>Active Cases</th>
-                        <th style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_serious_cases" : "confirmed")}>Serious Cases</th>
+                        <th className="col-xs-2" style={{textAlign: 'center', cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "title" : "state")}>{this.state.location}</th>
+                        <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_cases" : "confirmed")}>Total Cases</th>
+                        <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_deaths" : "deaths")}>Total Deaths</th>
+                        <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_recovered" : "recovered")}>Total Recovered</th>
+                        <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_active_cases" : "active")}>Active Cases</th>
+                        <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_serious_cases" : "confirmed")}>Serious Cases</th>
                         </tr>
                     </thead>
                     <tbody >
@@ -182,7 +182,7 @@ class AllCountryData extends React.Component {
                     </tbody>
                 </table>
                     </div>
-                    <div style={{margin: 'auto', marginTop: '0px'}} className="container-fluid col-md-4 col-xs-12">
+                    <div style={{margin: 'auto', marginTop: '0px'}} className="container-fluid col-md-4 col-xs-10">
                             <div  style={{marginTop: '0px', paddingTop: '60px'}} className="position-sticky">
                             <LineChart code={[this.state.clickedOnCountry, this.state.code]} />
                             </div>  
