@@ -155,7 +155,7 @@ class AllCountryData extends React.Component {
             <div className="conatiner">
                     <div className="row">
 
-                    <div style={{margin: 'auto', marginTop:'10px', marginBottom: '0px'} } className="col-md-8 col-xs-10">
+                    <div style={{margin: 'auto', marginTop:'10px', marginBottom: '0px'} } className="col-md-8 col-xs-12">
     
                     <div className="alert alert-success" style={{border: '1px solid', padding: '8px', width: 'auto'}} role="alert">
                         Click on any country row to view the detailed graph. (Updation and Loading of graphs takes time according to your Internet speed.)
@@ -182,7 +182,7 @@ class AllCountryData extends React.Component {
                     </tbody>
                 </table>
                     </div>
-                    <div style={{margin: 'auto', marginTop: '0px'}} className="container-fluid col-md-4 col-xs-10">
+                    <div style={{margin: 'auto', marginTop: '0px'}} className="container-fluid col-md-4 col-xs-12">
                             <div  style={{marginTop: '0px', paddingTop: '60px'}} className="position-sticky">
                             <LineChart code={[this.state.clickedOnCountry, this.state.code]} />
                             </div>  

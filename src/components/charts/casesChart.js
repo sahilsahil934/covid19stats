@@ -325,14 +325,14 @@ class LineChart extends React.Component {
                      </div>);
             }
             return (
-            <div className="container-sm">
-            <div style={{background: '#FDEDEC', padding: '20px', paddingTop: '5px', width: '100%'}}>
-                    <div className="mt-5 sticky-top">
+            <div className="container-fluid">
+            <div style={{background: '#FDEDEC', padding: '10px', paddingTop: '5px', width: '100%'}}>
+                    <div className="mt-5">
                     {(this.props.code[0]) ? "Country" : (this.props.code[1] === "TT") ? "Country" : "State"} : {this.state.country} &nbsp; 
                     <button id="current" className="btn btn-success">{this.state.mlist[this.state.month - 1]}</button> &nbsp; &nbsp;
                 {button} 
                     </div>
-                        <article style={{height: '100%'}}>
+                        <article style={{height: '100%', width: '100%'}}>
                         <Bar
                             data={this.state}
                             options={{
