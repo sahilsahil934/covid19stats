@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default axios.create({
-    baseURL: "https://api.thevirustracker.com/free-api?global=stats" 
+    baseURL: "https://api.covid19api.com/summary" 
 });
 
 

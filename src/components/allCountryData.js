@@ -25,19 +25,17 @@ class AllCountryData extends React.Component {
         const response = await allCountryCases.get();
         const response2 = await indiaData.get();
 
-        const result = response.data.countryitems[0];
+        const result = response.data.Countries;
+        console.log(result[0])
         const indiaApiData = response2.data.statewise;
         let sortedData = []
-        let duplicate = ['KP', 'XK', 'CD']
-        for (let i = 1; i <= 182; i++) {
-            if (!duplicate.includes(result[i].code)) {
+        for (let i = 0; i <= 189; i++) {
             sortedData.push(result[i])
-            }
         }
         sortedData.sort((a, b) => {
         if(a.total_cases < b.total_cases){
             return 1;
-        }else if(a.total_cases > b.total_cases){
+        }else if(a.TotalConfirmed > b.TotalConfirmed){
                 return -1;
         }else{
                 return 0;
@@ -51,17 +49,16 @@ class AllCountryData extends React.Component {
 
 
         let data = [];
-
         if (this.state.isCountry) {
             data = this.state.data
         } else {
             data = this.state.indiaData
         }
 
-        if (column === "title" || column === "state") {
+        if (column === "Country" || column === "state") {
 
             data.sort((b, a) => {
-
+                console.log(a[column])
                 if(a[column] < b[column]){
                     return 1;
                 }else if(a[column] > b[column]){
@@ -71,7 +68,21 @@ class AllCountryData extends React.Component {
                 }
             });
 
-        } else {
+        } 
+        else if (column === "total_active_cases") {
+            data.sort((a, b) => {
+                a = parseInt(a.TotalConfirmed) - parseInt(a.TotalDeaths) - parseInt(a.TotalRecovered)
+                b = parseInt(b.TotalConfirmed) - parseInt(b.TotalDeaths) - parseInt(b.TotalRecovered)
+                if(parseInt(a) < parseInt(b)){
+                    return 1;
+                }else if(parseInt(a) > parseInt(b)){
+                        return -1;
+                }else{
+                        return 0;
+                }
+            });
+        }
+        else {
             data.sort((a, b) => {
 
                 if(parseInt(a[column]) < parseInt(b[column])){
@@ -84,7 +95,6 @@ class AllCountryData extends React.Component {
             });
         }
 
-        
         if (this.state.isCountry) {
             this.setState({data: data})
         } else {
@@ -121,13 +131,12 @@ class AllCountryData extends React.Component {
 
              dataRows = this.state.data.map((data) => {
                 return (
-                <tr  className="country-row col-xs-2"  key={data.code} onClick={() => this.showGraph(data.code)}>
-                    <td className="col-xs-2" style={{textAlign: 'center'}}>{data.title}</td>
-                    <td className="col-xs-2">{data.total_cases} &nbsp; {(data.total_new_cases_today !== 0) ? "(+" + data.total_new_cases_today + ")" : " "}</td>
-                    <td className="col-xs-2" style={{color: 'darkred'}}>{data.total_deaths} &nbsp; {(data.total_new_deaths_today !== 0) ? "(+" + data.total_new_deaths_today + ")": ""}</td>
-                    <td className="col-xs-2">{(data.total_recovered !== 0) ? data.total_recovered : "-" }</td>
-                    <td className="col-xs-2">{data.total_active_cases}</td>
-                    <td className="col-xs-2" style={{color: 'darkred'}}>{data.total_serious_cases}</td>
+                <tr  className="country-row col-xs-2"  key={data.CountryCode} onClick={() => this.showGraph(data.CountryCode)}>
+                    <td className="col-xs-2" style={{textAlign: 'center'}}>{data.Country}</td>
+                    <td className="col-xs-2">{data.TotalConfirmed} &nbsp; {(data.NewConfirmed !== 0) ? "(+" + data.NewConfirmed + ")" : " "}</td>
+                    <td className="col-xs-2" style={{color: 'darkred'}}>{data.TotalDeaths} &nbsp; {(data.NewDeaths !== 0) ? "(+" + data.NewDeaths + ")": ""}</td>
+                    <td className="col-xs-2">{(data.TotalRecovered !== 0) ? data.TotalRecovered : "-" }</td>
+                    <td className="col-xs-2">{data.TotalConfirmed - data.TotalDeaths - data.TotalRecovered}</td>
                 </tr>);
             });
         } else {
@@ -139,7 +148,6 @@ class AllCountryData extends React.Component {
                     <td style={{background: '#F1F1F1'}}>{data.deaths} &nbsp; {(data.deltadeaths !== "0") ? "(+" + data.deltadeaths + ")" : " "}</td>
                     <td>{data.recovered} &nbsp; {(data.deltarecovered !== "0") ? "(+" + data.deltarecovered + ")" : " "}</td>
                     <td>{data.active}</td>
-                    <td style={{background: '#E1E1E1'}}>Not available</td>
                 </tr>);
             });
         }
@@ -169,12 +177,11 @@ class AllCountryData extends React.Component {
                     <table style={{borderCollapse: 'separate', borderSpacing: '5px 5px', borderRadius: '20px', background:'transparent', marginTop: '10px'}} className="table table-striped">
                     <thead>   
                         <tr >
-                        <th className="col-xs-2" style={{textAlign: 'center', cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "title" : "state")}>{this.state.location}</th>
-                        <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_cases" : "confirmed")}>Total Cases</th>
-                        <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_deaths" : "deaths")}>Total Deaths</th>
-                        <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_recovered" : "recovered")}>Total Recovered</th>
+                        <th className="col-xs-2" style={{textAlign: 'center', cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "Country" : "state")}>{this.state.location}</th>
+                        <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "TotalConfirmed" : "confirmed")}>Total Cases</th>
+                        <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "TotalDeaths" : "deaths")}>Total Deaths</th>
+                        <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "TotalRecovered" : "recovered")}>Total Recovered</th>
                         <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_active_cases" : "active")}>Active Cases</th>
-                        <th className="col-xs-2" style={{cursor: 'pointer', color: '#450000'}} onClick={() => this.dataSort((this.state.isCountry) ? "total_serious_cases" : "confirmed")}>Serious Cases</th>
                         </tr>
                     </thead>
                     <tbody >

@@ -26,16 +26,15 @@ class TotalStats extends React.Component {
 
         const response = await totalCases.get();
 
-        const result = response.data.results[0];
+        const result = response.data;
+  
         this.setState({
-            total: result.total_cases,
-            death: result.total_deaths,
-            recovered: result.total_recovered,
-            activeCases: result.total_active_cases,
-            seriousCases: result.total_serious_cases,
-            newCases: result.total_new_cases_today,
-            newDeath: result.total_new_deaths_today,
-            newRecoverd: result.total_new_recovered_today
+            total: result.Global.TotalConfirmed,
+            death: result.Global.TotalDeaths,
+            recovered: result.Global.TotalRecovered,
+            newCases: result.Global.NewConfirmed,
+            newDeath: result.Global.NewDeaths,
+            newRecoverd: result.Global.NewRecovered,
         });
     }
 
@@ -65,13 +64,7 @@ class TotalStats extends React.Component {
                 <div class="card bg-light mb-3 mr-2 col-sm-2" style={{maxWidth: '15rem', border: '1px solid black'}}>
                 <div class="card-header" style={{color: 'darkbrown'}}>Active Cases</div>
                 <div class="card-body">
-                    <h5 class="card-title" style={{color: 'green'}}>{this.state.activeCases}</h5>
-                </div>
-                </div>
-                <div class="card bg-light mb-3 mr-2 col-sm-2" style={{maxWidth: '15rem', border: '1px solid black'}}>
-                <div class="card-header" style={{color: 'darkbrown'}}>Serious Cases</div>
-                <div class="card-body">
-                    <h5 class="card-title" style={{color: 'red'}}>{this.state.seriousCases}</h5>
+                    <h5 class="card-title" style={{color: 'green'}}>{this.state.total - this.state.death - this.state.recovered}</h5>
                 </div>
                 </div>
                     
