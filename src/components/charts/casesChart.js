@@ -11,7 +11,7 @@ class LineChart extends React.Component {
         get: 0,
         currentMonth: true,
         monthValue:3,
-        mName: ["Jan", "Feb", "Mar", "Apr", "May"],
+        mName: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
         recieved: true,
         requiredDate: '',
         indiaDataRecieved: 0,
@@ -91,33 +91,44 @@ class LineChart extends React.Component {
             const response = await allWorldData.get(country);
             
             const result = response.data;
+            console.log(result)
+            result.reverse()
 
             let cases = []
 
 
             try {
 
-                if (Object.keys(result.timelineitems[0]).length === 1)
+                if (Object.keys(result).length === 1)
                 {
                     this.setState({ get: 1, 
                         recieved: true,
-                        country: result.countrytimelinedata[0].info.title
+                        country: result[0].Country
+                       
                     })
                 }
                 else {
-                
-                cases= dates.map(date => result.timelineitems[0][date].new_daily_cases);
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                cases = []
+                let values;
+                for (let i = dd - 2; i >= 0; i--)
+                {
+                    values = result[i].Confirmed - result[i + 1].Confirmed
+                    cases.push(values)
+                }
+                // console.log(date)
                 this.setState({
                     get: 0,
                     recieved: true,
-                    country: result.countrytimelinedata[0].info.title,
+                    country: result[0].Country,
                     allRecord: result.timelineitems,
                     datasets: [
                         {
                         label: 'Cases',
                         fill: false,
                         lineTension: 0.5,
-                        barThickness: 5,
+                        barThickness: 10,
                         hoverBackgroundColor: 'black',
                         backgroundColor: 'darkgray',
                         borderColor: 'rgba(0,0,0,1)',
@@ -178,7 +189,7 @@ class LineChart extends React.Component {
                         label: 'Cases',
                         fill: false,
                         lineTension: 0.5,
-                        barThickness: 5,
+                        barThickness: 10,
                         hoverBackgroundColor: 'black',
                         backgroundColor: 'darkgray',
                         borderColor: 'rgba(0,0,0,1)',
@@ -326,11 +337,11 @@ class LineChart extends React.Component {
             }
             return (
             <div className="container-fluid">
-            <div style={{background: '#FDEDEC', padding: '10px', paddingTop: '5px', width: '100%'}}>
+            <div style={{background: '#FDEDEC', padding: '40px', paddingTop: '5px', width: '100%'}}>
                     <div className="mt-5">
                     {(this.props.code[0]) ? "Country" : (this.props.code[1] === "TT") ? "Country" : "State"} : {this.state.country} &nbsp; 
                     <button id="current" className="btn btn-success">{this.state.mlist[this.state.month - 1]}</button> &nbsp; &nbsp;
-                {button} 
+                {/* {button}  */}
                     </div>
                         <article style={{height: '100%', width: '100%'}}>
                         <Bar

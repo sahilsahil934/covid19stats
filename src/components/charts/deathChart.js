@@ -10,7 +10,7 @@ class DeathChart extends React.Component {
         requiredDate: '',
         indiaDataRecieved: 0,
         country: '',
-        mName: ["Jan", "Feb", "Mar", "Apr", "May"],
+        mName: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
         statesData: [],
         month: 0,
         code: '',
@@ -61,20 +61,30 @@ class DeathChart extends React.Component {
 
             const response = await allWorldData.get(country);
             const result = response.data;
+            result.reverse()
             let cases = []
 
 
             try {
-                cases= dates.map(date => result.timelineitems[0][date].new_daily_deaths);
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                console.log(dd)
+                cases = []
+                let values;
+                for (let i = dd - 2; i >= 0; i--)
+                {
+                    values = result[i].Deaths - result[i + 1].Deaths
+                    cases.push(values)
+                }
                 this.setState({
-                    country: result.countrytimelinedata[0].info.title,
+                    country: result[0].Country,
                     allRecord: result.timelineitems,
                     datasets: [
                         {
                         label: 'Deaths',
                         fill: false,
                         lineTension: 0.5,
-                        barThickness: 5,
+                        barThickness: 10,
                         hoverBackgroundColor: 'black',
                         backgroundColor: 'red',
                         borderColor: 'rgba(0, 0, 0, 1)',
@@ -135,7 +145,7 @@ class DeathChart extends React.Component {
                         label: 'Death',
                         fill: false,
                         lineTension: 0.5,
-                        barThickness: 5,
+                        barThickness: 10,
                         hoverBackgroundColor: 'black',
                         backgroundColor: 'red',
                         borderColor: 'rgba(0,0,0,1)',
@@ -161,10 +171,6 @@ class DeathChart extends React.Component {
             let date = newDate.getDate() - 1;
             let month = newDate.getMonth() + 1;
             let year = newDate.getFullYear();
-            if (monthVal !== 0) {
-                month = monthVal;
-                date = new Date(year, monthVal, 0).getDate()
-            } 
             let x = year % 10;
             let newYear = parseInt(year / 10);
             let y = newYear % 10;
@@ -180,6 +186,7 @@ class DeathChart extends React.Component {
             }
 
             let xdates = [];
+            console.log(date)
             for (let i = 1; i <= date; i++) {
                 if (i < 10) {
                     xdates.push(month.toString() + '/0' + i.toString())
@@ -195,8 +202,9 @@ class DeathChart extends React.Component {
 
             let newDate = new Date();
             let date = newDate.getDate() - 1;
+            console.log(date)
             let month = newDate.getMonth() + 1;
-            let monthName = this.state.mName[month - 1]
+            let monthName = this.state.mName
             let year = newDate.getFullYear();
             if (monthVal !== 0) {
                 month = monthVal;

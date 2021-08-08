@@ -12,7 +12,8 @@ class AllCountryData extends React.Component {
         location: 'Country Name',
         indiaData: [],
         isCountry: true,
-        clickedOnCountry: true
+        clickedOnCountry: true,
+        code: ''
     };
 
     componentDidMount() {
@@ -170,9 +171,10 @@ class AllCountryData extends React.Component {
                     </div>
                     <div className="alert alert-primary" style={{border: '1px solid', padding: '8px'}} role="alert">
                             * Click on any column title to sort it according to that (Descending except {this.state.location} (Ascending)).
-                    </div>                   
-                    <button id="march" className={(this.state.isCountry) ? "btn btn-success" : "btn btn-light" }  onClick={this.worldDetails} >World</button> &nbsp;
-                    <button id="march" className={(this.state.isCountry) ? "btn btn-light" : "btn btn-success"}  onClick={this.indiaDetails}>India</button>
+                    </div>  
+                    <button id="march" className={(this.state.isCountry) ? "btn btn-success" : "btn btn-light" }  onClick={this.worldDetails} >World</button> &nbsp;    
+                    <button id="march" className={(this.state.isCountry) ? "btn btn-light" : "btn btn-success"}  onClick={this.indiaDetails}>India</button>              
+                    
                     &nbsp; [* Detailed graph for each state of India is available now.]
                     <table style={{borderCollapse: 'separate', borderSpacing: '5px 5px', borderRadius: '20px', background:'transparent', marginTop: '10px'}} className="table table-striped">
                     <thead>   
@@ -189,8 +191,8 @@ class AllCountryData extends React.Component {
                     </tbody>
                 </table>
                     </div>
-                    <div style={{margin: 'auto', marginTop: '0px'}} className="container-fluid col-md-4 col-xs-12">
-                            <div  style={{marginTop: '0px', paddingTop: '60px'}} className="position-sticky">
+                    <div style={{margin: 'auto', marginTop: '0px', position: 'sticky', top: '10px'}} className="container-fluid col-md-4 col-xs-12">
+                            <div  style={{marginTop: '0px', paddingTop: '60px'}}>
                             <LineChart code={[this.state.clickedOnCountry, this.state.code]} />
                             </div>  
                     

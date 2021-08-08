@@ -56,12 +56,6 @@ class TotalStats extends React.Component {
                 </div>
                 </div>
                 <div class="card bg-light mb-3 mr-2 col-sm-2" style={{maxWidth: '15rem', border: '1px solid black'}}>
-                <div class="card-header" style={{color: 'darkbrown'}}>Total Recovered</div>
-                <div class="card-body">
-                    <h5 class="card-title" style={{color: 'orange'}}>{this.state.recovered}</h5>
-                </div>
-                </div>
-                <div class="card bg-light mb-3 mr-2 col-sm-2" style={{maxWidth: '15rem', border: '1px solid black'}}>
                 <div class="card-header" style={{color: 'darkbrown'}}>Active Cases</div>
                 <div class="card-body">
                     <h5 class="card-title" style={{color: 'green'}}>{this.state.total - this.state.death - this.state.recovered}</h5>
