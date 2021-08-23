@@ -68,7 +68,7 @@ class DeathChart extends React.Component {
             try {
                 var today = new Date();
                 var dd = String(today.getDate()).padStart(2, '0');
-                console.log(dd)
+                
                 cases = []
                 let values;
                 for (let i = dd - 2; i >= 0; i--)
@@ -186,7 +186,6 @@ class DeathChart extends React.Component {
             }
 
             let xdates = [];
-            console.log(date)
             for (let i = 1; i <= date; i++) {
                 if (i < 10) {
                     xdates.push(month.toString() + '/0' + i.toString())

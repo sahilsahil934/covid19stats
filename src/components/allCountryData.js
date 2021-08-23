@@ -3,6 +3,8 @@ import allCountryCases from './../api/allCountryCases';
 import indiaData from './../api/indiaData'
 import LineChart from './charts/casesChart'
 import './allCountryData.css'
+import indiaStateData from '../api/indiaStateData';
+import stateCode from './../data/indiaCodeToStateData.json'
 
 class AllCountryData extends React.Component {
 
@@ -25,10 +27,22 @@ class AllCountryData extends React.Component {
 
         const response = await allCountryCases.get();
         const response2 = await indiaData.get();
-
         const result = response.data.Countries;
-        console.log(result[0])
-        const indiaApiData = response2.data.statewise;
+        const indiaApiData = response2.data;
+        let indData = []
+        for (const [key, value] of Object.entries(indiaApiData)) {
+            let x = {
+                statecode: key,
+                state: stateCode[key],
+                confirmed: value.total.confirmed,
+                deaths: value.total.deceased,
+                recovered: value.total.recovered,
+                active: (value.total.confirmed - value.total.deceased -value.total.recovered), 
+            }
+            indData.push(x)
+          }
+         
+
         let sortedData = []
         for (let i = 0; i <= 189; i++) {
             sortedData.push(result[i])
@@ -42,7 +56,21 @@ class AllCountryData extends React.Component {
                 return 0;
         }
         });
-        this.setState({data: sortedData, indiaData: indiaApiData})
+
+
+        this.setState({data: sortedData, indiaData: indData})
+
+        let sortedDataInd = this.state.indiaData
+            sortedDataInd.sort((a, b) => {
+            if(a.confirmed < b.confrmed){
+                return 1;
+            }else if(a.confirmed > b.confirmed){
+                    return -1;
+            }else{
+                    return 0;
+            }
+            });
+        this.setState({indiaData: sortedDataInd})
 
     }
 
@@ -59,7 +87,6 @@ class AllCountryData extends React.Component {
         if (column === "Country" || column === "state") {
 
             data.sort((b, a) => {
-                console.log(a[column])
                 if(a[column] < b[column]){
                     return 1;
                 }else if(a[column] > b[column]){
@@ -129,15 +156,14 @@ class AllCountryData extends React.Component {
 
         let dataRows = []
         if (this.state.isCountry) {
-
              dataRows = this.state.data.map((data) => {
                 return (
                 <tr  className="country-row col-xs-2"  key={data.CountryCode} onClick={() => this.showGraph(data.CountryCode)}>
                     <td className="col-xs-2" style={{textAlign: 'center'}}>{data.Country}</td>
                     <td className="col-xs-2">{data.TotalConfirmed} &nbsp; {(data.NewConfirmed !== 0) ? "(+" + data.NewConfirmed + ")" : " "}</td>
                     <td className="col-xs-2" style={{color: 'darkred'}}>{data.TotalDeaths} &nbsp; {(data.NewDeaths !== 0) ? "(+" + data.NewDeaths + ")": ""}</td>
-                    <td className="col-xs-2">{(data.TotalRecovered !== 0) ? data.TotalRecovered : "-" }</td>
-                    <td className="col-xs-2">{data.TotalConfirmed - data.TotalDeaths - data.TotalRecovered}</td>
+                    <td className="col-xs-2">{(data.TotalRecovered !== 0) ? data : "-" }</td>
+                    <td className="col-xs-2">-</td>
                 </tr>);
             });
         } else {
@@ -145,9 +171,9 @@ class AllCountryData extends React.Component {
                 return (
                 <tr  className="country-row"  key={data.statecode} onClick={() => this.stateGraph(data.statecode)}>
                     <td style={{textAlign: 'center'}}>{data.state}</td>
-                    <td>{data.confirmed} &nbsp; {(data.deltaconfirmed !== "0") ? "(+" + data.deltaconfirmed + ")" : " "} </td>
-                    <td style={{background: '#F1F1F1'}}>{data.deaths} &nbsp; {(data.deltadeaths !== "0") ? "(+" + data.deltadeaths + ")" : " "}</td>
-                    <td>{data.recovered} &nbsp; {(data.deltarecovered !== "0") ? "(+" + data.deltarecovered + ")" : " "}</td>
+                    <td>{data.confirmed}  </td>
+                    <td style={{background: '#F1F1F1'}}>{data.deaths} </td>
+                    <td>{data.recovered} </td>
                     <td>{data.active}</td>
                 </tr>);
             });

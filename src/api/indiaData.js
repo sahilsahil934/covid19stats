@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default axios.create({
-    baseURL: "https://api.covid19india.org/data.json" 
+    baseURL: "https://data.covid19india.org/v4/min/data.min.json" 
 });
 
 

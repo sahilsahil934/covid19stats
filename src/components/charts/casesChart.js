@@ -91,7 +91,6 @@ class LineChart extends React.Component {
             const response = await allWorldData.get(country);
             
             const result = response.data;
-            console.log(result)
             result.reverse()
 
             let cases = []
